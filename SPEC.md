@@ -30,7 +30,7 @@ El resultado principal es un **PDF imprimible**. El plan también tiene que pode
 | Thermomix | 1 |
 | Pacojet | 1 |
 | Frío | 2 refrigeradores, 1 congelador (sin restricción de capacidad en el planificador; solo informativo) |
-| Usuarios | 1 (Fer) |
+| Usuarios | Fer prepara el plan (Chef); los demás (Kock, Service) lo consultan |
 | Cantidades | Normalmente iguales cada día: 1 batch (no hace falta escalar en el MVP) |
 
 ## 3. Conceptos clave
@@ -286,9 +286,10 @@ interface Installningar {
   - Auth: Supabase Auth con correo y contraseña (`signInWithPassword`). Para usar el planner, la cuenta necesita además un rol en `kitchen_members`.
   - `receptId` = `id` de la receta dentro del JSON, sin clave foránea posible. Si la receta desaparece del documento, la preparación del planner se marca como huérfana.
   - Los datos reales no están en el repo: el emparejamiento por nombre se hace contra Supabase en la fase 4.
-- Ruta de una receta: `<URL de la app>/?recept=<id>` abre esa receta (añadido a la app de recetas a petición de Fer, 2026-11-18; la app no usa router). [PENDIENTE] Confirmar el dominio publicado de la app de recetas.
+- Ruta de una receta: `https://sverre-recepter.pages.dev/?recept=<id>` abre esa receta (añadido a la app de recetas a petición de Fer, 2026-11-18; la app no usa router).
 - **Preparaciones propias del planner** (decisión de Fer, 2026-11-18): una preparación puede no tener grundrecept (`receptId` vacío), p. ej. "Mandlar". Se crean y borran en Katalog; no tienen "Visa recept". Al emparejar con Supabase, las que coinciden con una grundrecept se enlazan y el resto quedan como propias.
-- Auth: Supabase Auth, la misma cuenta que en la app de recetas (con rol en `kitchen_members`). RLS en las tablas `planner_*` limitado al usuario.
+- Auth: Supabase Auth, la misma cuenta que en la app de recetas (con rol en `kitchen_members`).
+- **Datos compartidos por la cocina** (decisión de Fer, 2026-11-18): hay un único catálogo y un único plan del día para todo el restaurante, no uno por usuario. RLS en las tablas `planner_*`: cualquier miembro de `kitchen_members` (Chef, Kock, Service) puede leer; solo Chef puede escribir.
 
 ## 8. Pantallas (textos en sueco)
 
@@ -390,7 +391,8 @@ Resueltas:
 Pendientes:
 - [x] Dónde están las grundrecept: `kitchen_workspace.data.recipes` con `type = "prep"` (§7).
 - [x] Ruta URL de una receta: `?recept=<id>` (§7).
-- [ ] Dominio publicado de la app de recetas (§7).
+- [x] Dominio publicado de la app de recetas: https://sverre-recepter.pages.dev/ (§7).
+- [x] Plan y catálogo compartidos por la cocina: leen todos los miembros, escribe Chef (§7).
 - [x] Preparaciones propias del planner, sin grundrecept (§7).
 - [ ] Emparejar el catálogo con las grundrecept (se hace contra Supabase en la fase 4, §7).
 - [ ] Revisar los tiempos estimados de `KATALOG-UTKAST.md`.
