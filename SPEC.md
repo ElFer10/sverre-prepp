@@ -271,22 +271,24 @@ interface Installningar {
 
 ## 7. Integración con la app de recetas
 
-- Mismo proyecto de Supabase. Las tablas del planner van aparte (prefijo `planner_`).
+- Mismo proyecto de Supabase que la app de recetas. Las tablas del planner van aparte (prefijo `planner_`).
 - El planner **solo lee** las grundrecept (id, nombre, categoría). **Nunca escribe** en las tablas de la app de recetas. Las maträtter no se usan.
 - El catálogo del planner = grundrecept + los datos de tiempo y recursos del planner, unidos por `receptId`, más las preparaciones propias del planner.
 - Si una grundrecept todavía no tiene fases, se marca "Ej konfigurerad" y no se puede planificar hasta completarla.
 - El editor de fases muestra los pasos de la receta (solo lectura, si están accesibles en Supabase) junto al formulario, para que crear las fases sea rápido.
 - Cada preparación tiene un botón "Visa recept" que abre la app de recetas (`receptUrlMall`).
 - Import inicial: `KATALOG-UTKAST.md` → fixture JSON y semilla. El nombre se empareja con la grundrecept por nombre; los casos ambiguos se le preguntan a Fer.
-- **Esquema confirmado** (código de la app de recetas, `sverrecepter/supabase/`, 2026-11-17):
-  - Grundrecept = tabla `public.recipes` con `type = 'prep'` (`'dish'` = maträtter). Columnas útiles: `id uuid`, `name_sv`, `category`, `status` (`draft | active | archived`), `steps_sv` (pasos, texto con saltos de línea), `minutes`.
-  - Lectura: RLS `member_read` permite `select` a cualquier usuario autenticado con perfil (`public.my_role() is not null`). Las escrituras directas están revocadas; la app de recetas guarda todo con la RPC `kitchen_save`.
-  - Auth: Supabase Auth con correo y contraseña (`signInWithPassword`). Variables: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`.
-  - **Las tablas `planner_*` no deben tener claves foráneas a `recipes`**: `kitchen_save` borra y vuelve a insertar recetas, y una FK haría fallar el guardado de la app de recetas. `receptId` se guarda como `uuid` sin FK; si la receta desaparece, la preparación se marca como huérfana.
-  - Los ids de los datos locales de la app de recetas (`p1`, `sverre-ing-001`…) no son los de la nube: el emparejamiento por nombre se hace contra Supabase.
-- Ruta de una receta: `https://sverre-recepter.pages.dev/?recept=<id>` abre esa receta (añadido a la app de recetas a petición de Fer, 2026-11-18).
+- **Esquema confirmado** (código de la app de recetas online, repo `sverre-recepter`, revisado el 2026-11-18):
+  - Proyecto Supabase propio de la app de recetas (URL y clave publicable en `sverre-recepter/src/cloud.tsx`; la clave publicable es pública por diseño, la protección es RLS).
+  - **No hay tabla de recetas**: toda la cocina es un único documento JSON en `public.kitchen_workspace.data` (fila `id = 1`, con `revision`). Grundrecept = elementos de `data.recipes` con `type === "prep"` (`"dish"` = maträtter). Campos útiles: `id` (uuid generado con `crypto.randomUUID()`), `name`, `category`, `status` (`draft | active | archived`), `steps` (pasos, una línea por paso), `minutes`.
+  - Lectura: RLS `read_kitchen` permite `select` a cualquier usuario con fila en `public.kitchen_members` (roles `Chef`, `Kock`, `Service`). El planner lee solo `data->recipes` (`select('recipes:data->recipes')`).
+  - Escritura: solo la RPC `save_kitchen` (rol Chef), que sustituye el documento entero con control de revisión. **El planner nunca la llama** ni escribe en `kitchen_workspace` ni en `kitchen_members`.
+  - Auth: Supabase Auth con correo y contraseña (`signInWithPassword`). Para usar el planner, la cuenta necesita además un rol en `kitchen_members`.
+  - `receptId` = `id` de la receta dentro del JSON, sin clave foránea posible. Si la receta desaparece del documento, la preparación del planner se marca como huérfana.
+  - Los datos reales no están en el repo: el emparejamiento por nombre se hace contra Supabase en la fase 4.
+- Ruta de una receta: `<URL de la app>/?recept=<id>` abre esa receta (añadido a la app de recetas a petición de Fer, 2026-11-18; la app no usa router). [PENDIENTE] Confirmar el dominio publicado de la app de recetas.
 - **Preparaciones propias del planner** (decisión de Fer, 2026-11-18): una preparación puede no tener grundrecept (`receptId` vacío), p. ej. "Mandlar". Se crean y borran en Katalog; no tienen "Visa recept". Al emparejar con Supabase, las que coinciden con una grundrecept se enlazan y el resto quedan como propias.
-- Auth: Supabase Auth, la misma cuenta que en la app de recetas. RLS en las tablas `planner_*` limitado al usuario.
+- Auth: Supabase Auth, la misma cuenta que en la app de recetas (con rol en `kitchen_members`). RLS en las tablas `planner_*` limitado al usuario.
 
 ## 8. Pantallas (textos en sueco)
 
@@ -386,10 +388,11 @@ Resueltas:
 - [x] Mover la olla al interrumpir: lo hace el cocinero de la fase que interrumpe (§3.10).
 
 Pendientes:
-- [x] Tabla y columnas de grundrecept: `recipes` con `type = 'prep'` (§7).
+- [x] Dónde están las grundrecept: `kitchen_workspace.data.recipes` con `type = "prep"` (§7).
 - [x] Ruta URL de una receta: `?recept=<id>` (§7).
+- [ ] Dominio publicado de la app de recetas (§7).
 - [x] Preparaciones propias del planner, sin grundrecept (§7).
-- [ ] Emparejar el catálogo con las grundrecept: 22 de 46 coinciden por nombre exacto (§7).
+- [ ] Emparejar el catálogo con las grundrecept (se hace contra Supabase en la fase 4, §7).
 - [ ] Revisar los tiempos estimados de `KATALOG-UTKAST.md`.
 - [ ] ¿El pacotizado de sorbetes y helados aparece en el plan como följdsteg?
 - [ ] Fases de Potatis chips, Gröna oliver y Kokta potatis i brynt smör (no tienen pasos en la receta).
