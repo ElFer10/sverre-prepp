@@ -25,14 +25,19 @@ const tomForberedelse = (): Forberedelse => ({
   aktiv: true,
 });
 
-/** `id === null` → crear una preparación propia nueva. */
-export function Redigera(props: { id: string | null }) {
-  const { katalog, installningar } = useLager();
+/**
+ * `id === null` → crear una preparación nueva: propia, o enlazada a la grundrecept `receptId`
+ * (al configurar una grundrecept que aún no tiene momentos).
+ */
+export function Redigera(props: { id: string | null; receptId?: string }) {
+  const { katalog, installningar, grundrecept, kanAndra } = useLager();
   const ny = props.id === null;
   const original = ny ? undefined : katalog.find((f) => f.id === props.id);
-  const [utkast, setUtkast] = useState<Forberedelse | undefined>(() =>
-    ny ? tomForberedelse() : original ? structuredClone(original) : undefined,
-  );
+  const [utkast, setUtkast] = useState<Forberedelse | undefined>(() => {
+    if (!ny) return original ? structuredClone(original) : undefined;
+    const g = grundrecept.find((x) => x.id === props.receptId);
+    return g ? { ...tomForberedelse(), namn: g.namn, kategori: g.kategori, receptId: g.id } : tomForberedelse();
+  });
   const [fel, setFel] = useState<string[]>([]);
 
   if (!utkast) {
@@ -89,6 +94,18 @@ export function Redigera(props: { id: string | null }) {
   };
 
   const andra = katalog.filter((k) => k.id !== f.id).sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
+  const kopplad = grundrecept.find((g) => g.id === f.receptId);
+  const valbaraGrundrecept = grundrecept
+    .filter((g) => g.status !== "archived" || g.id === f.receptId)
+    .sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
+  const koppla = (receptId: string) => {
+    const g = grundrecept.find((x) => x.id === receptId);
+    if (!g) {
+      const { receptId: _bort, ...utan } = f;
+      void _bort;
+      setUtkast(utan);
+    } else satt({ receptId: g.id, namn: g.namn, kategori: g.kategori || f.kategori });
+  };
   const receptUrl = installningar.receptUrlMall && f.receptId ? installningar.receptUrlMall.replace("{id}", f.receptId) : "";
 
   return (
@@ -99,6 +116,10 @@ export function Redigera(props: { id: string | null }) {
         </button>
         <h1>{ny ? sv.redigera.nyRubrik : sv.redigera.rubrik}</h1>
       </div>
+      {!kanAndra && <p className="liten">{sv.konto.lasLage}</p>}
+
+      {/* Kock y Service ven la configuración pero no la cambian */}
+      <fieldset className="las" disabled={!kanAndra}>
 
       {fel.length > 0 && (
         <div className="kort varningar" role="alert">
@@ -112,13 +133,27 @@ export function Redigera(props: { id: string | null }) {
       )}
 
       <section className="kort formular">
+        {grundrecept.length > 0 && (
+          <label>
+            <span className="etikett">{sv.redigera.grundrecept}</span>
+            <select value={f.receptId ?? ""} onChange={(e) => koppla(e.target.value)}>
+              <option value="">{sv.redigera.ingetGrundrecept}</option>
+              {valbaraGrundrecept.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.namn}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <label>
           <span className="etikett">{sv.redigera.namn}</span>
-          <input value={f.namn} onChange={(e) => satt({ namn: e.target.value })} />
+          <input value={f.namn} disabled={!!kopplad} onChange={(e) => satt({ namn: e.target.value })} />
+          {kopplad && <span className="liten">{sv.redigera.namnFranRecept}</span>}
         </label>
         <label>
           <span className="etikett">{sv.redigera.kategori}</span>
-          <input value={f.kategori ?? ""} onChange={(e) => satt({ kategori: e.target.value })} />
+          <input value={f.kategori ?? ""} disabled={!!kopplad} onChange={(e) => satt({ kategori: e.target.value })} />
         </label>
         {receptUrl ? (
           <a className="lank-knapp" href={receptUrl} target="_blank" rel="noreferrer">
@@ -128,6 +163,17 @@ export function Redigera(props: { id: string | null }) {
           <p className="liten">{sv.katalog.egenForklaring}</p>
         )}
       </section>
+
+      {kopplad && kopplad.steg.length > 0 && (
+        <details className="kort receptsteg" open>
+          <summary>{sv.redigera.receptetsSteg}</summary>
+          <ol>
+            {kopplad.steg.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ol>
+        </details>
+      )}
 
       <h2 className="sektion-rubrik">{sv.redigera.moment}</h2>
       {f.faser.map((x, i) => (
@@ -229,7 +275,9 @@ export function Redigera(props: { id: string | null }) {
         </label>
       </section>
 
-      {!ny && !f.receptId && (
+      </fieldset>
+
+      {kanAndra && !ny && (
         <div className="knapp-rad">
           <button className="fara" onClick={taBort}>
             {sv.redigera.taBort}
@@ -237,14 +285,16 @@ export function Redigera(props: { id: string | null }) {
         </div>
       )}
 
-      <div className="atgard-rad">
-        <button className="sekundar" onClick={tillbaka}>
-          {sv.allmant.avbryt}
-        </button>
-        <button className="primar" onClick={spara}>
-          {sv.allmant.spara}
-        </button>
-      </div>
+      {kanAndra && (
+        <div className="atgard-rad">
+          <button className="sekundar" onClick={tillbaka}>
+            {sv.allmant.avbryt}
+          </button>
+          <button className="primar" onClick={spara}>
+            {sv.allmant.spara}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

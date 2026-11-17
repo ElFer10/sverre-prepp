@@ -1,18 +1,24 @@
-import { useMemo, useState } from "react";
-import { andraDag, idagDatum, tomDag, useLager } from "../data/lager";
+import { useEffect, useMemo, useState } from "react";
+import { andraDag, gjordesDet, idagDatum, oppnaDag, tomDag, useLager } from "../data/lager";
 import { sv } from "../i18n/sv";
 import { ga } from "../komponenter/useRutt";
 import { usePlanera } from "../plan/usePlanera";
-import { datumText } from "../plan/vy";
+import { datumText, kortDatum } from "../plan/vy";
 import type { DagensPost, Dagsplan, Forberedelse } from "../scheduler/types";
 
 /** Reasigna `ordning` según la posición en la lista. */
 const numrera = (poster: DagensPost[]) => poster.map((p, i) => ({ ...p, ordning: i }));
 
 export function Idag() {
-  const { katalog, dagar } = useLager();
+  const { katalog, dagar, kanAndra } = useLager();
   const datum = idagDatum();
+  const finns = !!dagar[datum];
   const dag: Dagsplan = dagar[datum] ?? tomDag(datum);
+  // Chef abre el día: se cierra el anterior si nadie lo hizo y llega lo pendiente
+  useEffect(() => {
+    if (!finns && kanAndra) oppnaDag(datum);
+  }, [finns, kanAndra, datum]);
+  const redigerbar = kanAndra && !dag.stangd;
   const porId = useMemo(() => new Map(katalog.map((f) => [f.id, f])), [katalog]);
   const { planera, planerar, fel } = usePlanera();
 
@@ -46,21 +52,29 @@ export function Idag() {
   return (
     <div className="sida">
       <h1>{datumText(datum)}</h1>
+      {!kanAndra && <p className="liten">{sv.konto.lasLage}</p>}
+      {dag.stangd && <p className="banner">{sv.idag.dagenStangd}</p>}
+      {!kanAndra && !finns && <p className="tom">{sv.idag.ingenPlanAn}</p>}
 
       <div className="falt-rad">
         <span className="etikett">{sv.idag.kockar}</span>
         <div className="segment" role="group" aria-label={sv.idag.kockar}>
           {([1, 2] as const).map((n) => (
-            <button key={n} className={dag.kockar === n ? "vald" : ""} onClick={() => andra((d) => ({ ...d, kockar: n }))}>
+            <button
+              key={n}
+              className={dag.kockar === n ? "vald" : ""}
+              disabled={!redigerbar}
+              onClick={() => andra((d) => ({ ...d, kockar: n }))}
+            >
               {n}
             </button>
           ))}
         </div>
       </div>
 
-      <Sok katalog={katalog} paListan={new Set(dag.poster.map((p) => p.forberedelseId))} onValj={laggTill} />
+      {redigerbar && <Sok katalog={katalog} paListan={new Set(dag.poster.map((p) => p.forberedelseId))} onValj={laggTill} />}
 
-      {dag.poster.length === 0 && <p className="tom">{sv.idag.tomLista}</p>}
+      {dag.poster.length === 0 && finns && <p className="tom">{sv.idag.tomLista}</p>}
 
       {(["maste", "om-tid"] as const).map((prio) => {
         const poster = dag.poster.filter((p) => p.prioritet === prio);
@@ -77,8 +91,15 @@ export function Idag() {
                     <div className="post-text">
                       <span className="post-namn">{f?.namn ?? p.forberedelseId}</span>
                       {ejKonf && <span className="liten varnings-text">{sv.idag.ejKonfigurerad}</span>}
-                      {p.overfordFran && <span className="liten">{sv.idag.overford(p.overfordFran)}</span>}
+                      {p.overfordFran && <span className="liten">{sv.idag.overford(kortDatum(p.overfordFran))}</span>}
+                      {p.overfordFran && redigerbar && (
+                        <label className="bock liten-bock">
+                          <input type="checkbox" onChange={() => gjordesDet(datum, p.forberedelseId)} />
+                          {sv.idag.gjordesDet}
+                        </label>
+                      )}
                     </div>
+                    {redigerbar && (
                     <div className="post-knappar">
                       {prio === "om-tid" && (
                         <>
@@ -102,6 +123,7 @@ export function Idag() {
                         ✕
                       </button>
                     </div>
+                    )}
                   </li>
                 );
               })}
@@ -112,11 +134,20 @@ export function Idag() {
 
       {fel !== null && <p className="fel">{fel}</p>}
 
-      <div className="atgard-rad">
-        <button className="primar" disabled={planerbara.length === 0 || planerar} onClick={kor}>
-          {planerar ? sv.idag.planerar : sv.idag.planera}
-        </button>
-      </div>
+      {redigerbar && (
+        <>
+          <div className="knapp-rad">
+            <a className="knapp-lank" href="#/stang">
+              {sv.idag.stangDagen}
+            </a>
+          </div>
+          <div className="atgard-rad">
+            <button className="primar" disabled={planerbara.length === 0 || planerar} onClick={kor}>
+              {planerar ? sv.idag.planerar : sv.idag.planera}
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

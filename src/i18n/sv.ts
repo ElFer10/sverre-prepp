@@ -9,6 +9,46 @@ export const sv = {
     idag: "Idag",
     plan: "Plan",
     katalog: "Katalog",
+    installningar: "Inställningar",
+  },
+
+  // --- Inloggning och sparande ------------------------------------------------
+  konto: {
+    rubrik: "Logga in",
+    forklaring: "Samma konto som i receptappen.",
+    epost: "E-post",
+    losenord: "Lösenord",
+    loggaIn: "Logga in",
+    loggarIn: "Loggar in…",
+    loggaUt: "Logga ut",
+    laddar: "Laddar…",
+    forsokIgen: "Försök igen",
+    inloggadSom: (epost: string, roll: string) => `Inloggad som ${epost} (${roll})`,
+    lokaltLage: "Lokalt läge: data sparas bara i den här webbläsaren.",
+    lasLage: "Du kan se planen men bara Chef kan ändra.",
+  },
+
+  fel: {
+    inloggning: "Fel e-post eller lösenord.",
+    ingenRoll: "Ditt konto saknar behörighet i köket. Be ansvarig tilldela Chef, Kock eller Service.",
+    databas: (detalj: string) => `Databasen kunde inte nås: ${detalj}`,
+    plannerSaknas: "Planerarens tabeller finns inte i databasen än. Kör supabase/001_planner.sql (se supabase/README.md).",
+    sparfel: (detalj: string) => `Kunde inte spara: ${detalj}`,
+    bara_chef: "Endast Chef kan ändra.",
+  },
+
+  sparar: {
+    sparar: "Sparar…",
+    sparat: "Sparat",
+  },
+
+  // --- Importera till molnet ----------------------------------------------------
+  importera: {
+    rubrik: "Katalogen i molnet är tom",
+    forklaring: "Välj vad som ska laddas upp. Det görs bara en gång och påverkar inte receptappen.",
+    franEnhet: (n: number) => `Importera från den här enheten (${n} förberedelser)`,
+    utkast: (n: number) => `Importera utkastet (${n} förberedelser)`,
+    importerar: "Importerar…",
   },
 
   allmant: {
@@ -36,15 +76,19 @@ export const sv = {
     egen: "Egen",
     egenForklaring: "Egen förberedelse – finns inte i receptappen",
     ny: "Ny förberedelse",
-    aterstall: "Återställ katalogen",
-    aterstallFraga: "Återställ katalogen till utkastet? Dina ändringar försvinner.",
+    saknas: "Saknas i receptappen",
+    saknasForklaring: "Grundreceptet finns inte längre i receptappen",
+    kopplad: "Grundrecept",
+    koppla: "Koppla till grundrecept",
+    okonfigureradeRubrik: "Grundrecept utan moment",
   },
 
   redigera: {
     rubrik: "Redigera förberedelse",
     nyRubrik: "Ny förberedelse",
     taBort: "Ta bort förberedelse",
-    taBortFraga: (namn: string) => `Ta bort ${namn} från katalogen? Den tas också bort som beroende och följdsteg.`,
+    taBortFraga: (namn: string) =>
+      `Ta bort ${namn} från planeraren? Den tas också bort som beroende och följdsteg. Receptet i receptappen påverkas inte.`,
     namn: "Namn",
     kategori: "Kategori",
     moment: "Moment",
@@ -73,6 +117,10 @@ export const sv = {
     kontrolleraFore: "Kontrollera före start (en per rad)",
     aktiv: "Aktiv i katalogen",
     visaRecept: "Visa recept",
+    grundrecept: "Grundrecept i receptappen",
+    ingetGrundrecept: "Inget (egen förberedelse)",
+    receptetsSteg: "Receptets steg",
+    namnFranRecept: "Namnet kommer från receptappen.",
     fel: "Rätta följande innan du sparar:",
   },
 
@@ -108,6 +156,55 @@ export const sv = {
     ejKonfigurerad: "Ej konfigurerad – kan inte planeras",
     redanPaListan: "Redan på listan",
     overford: (datum: string) => `Överförd från ${datum}`,
+    gjordesDet: "Gjordes det?",
+    stangDagen: "Stäng dagen",
+    dagenStangd: "Dagen är stängd.",
+    ingenPlanAn: "Ingen plan för idag än.",
+  },
+
+  // --- Stäng dagen ----------------------------------------------------------
+  stang: {
+    rubrik: "Stäng dagen",
+    forklaring: "Markera vad som blev gjort. Det som inte blev gjort flyttas till nästa dag, och följdsteg läggs till.",
+    gjord: "Gjord",
+    ejGjord: "Inte gjord",
+    tillNastaDag: "Till nästa dag",
+    ingetTillNasta: "Inget flyttas till nästa dag.",
+    foljdsteg: "följdsteg",
+    bekrafta: "Stäng dagen",
+    tom: "Inget på dagens lista.",
+  },
+
+  // --- Koppla -------------------------------------------------------------------
+  koppla: {
+    rubrik: "Koppla till grundrecept",
+    forklaring: "Välj vilket grundrecept i receptappen varje förberedelse motsvarar. Exakta namn är förvalda; kontrollera de övriga.",
+    exakt: "Exakt namn",
+    forslag: "Förslag",
+    ingen: "Ingen – egen förberedelse",
+    ovriga: "Övriga grundrecept",
+    spara: (n: number) => (n === 1 ? "Spara 1 koppling" : `Spara ${n} kopplingar`),
+    allaKopplade: "Alla förberedelser är kopplade eller egna.",
+    ingaGrundrecept: "Receptappen har inga grundrecept.",
+  },
+
+  // --- Inställningar --------------------------------------------------------------
+  installningar: {
+    rubrik: "Inställningar",
+    konto: "Konto",
+    tider: "Tider",
+    start: "Start",
+    oppning: "Öppning",
+    resurser: "Resurser",
+    spisplattor: "Spisplattor",
+    ugnBleck: "Ugn: bleck",
+    forvarmning: "Ugn: förvärmning (min)",
+    byte: "Ugn: byta inställning (min)",
+    thermomixRengoring: "Thermomix: rengöring (min)",
+    pacojetRengoring: "Pacojet: rengöring (min)",
+    avbrott: "Flytta en kastrull av/på plattan (min)",
+    iterationer: "Planerarens försök",
+    ogiltig: "Kontrollera värdena: tider som 14:00, öppning efter start och positiva tal.",
   },
 
   // --- Plan ----------------------------------------------------------------
@@ -116,6 +213,7 @@ export const sv = {
     ingenPlan: "Ingen plan än. Gå till Idag och tryck på Planera.",
     inaktuell: "Listan har ändrats sedan planen gjordes.",
     planeraOm: "Planera om",
+    uppdatera: "Uppdatera",
     laddaNerPdf: "Ladda ner PDF",
     kockarFonster: (kockar: number, start: string, slut: string) =>
       `${kockar === 1 ? "1 kock" : `${kockar} kockar`} · ${start}–${slut}`,

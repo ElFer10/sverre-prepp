@@ -6,6 +6,7 @@ import {
   ganttRader,
   klockslag,
   kockRader,
+  kortDatum,
   kontrollRader,
   resursRader,
   ugnHandelser,
@@ -19,6 +20,10 @@ describe("klockslag", () => {
     expect(klockslag(65, "14:00")).toBe("15:05");
     expect(klockslag(120, "14:00")).toBe("16:00");
     expect(klockslag(15, "13:50")).toBe("14:05");
+  });
+
+  it("acorta fechas", () => {
+    expect(kortDatum("2026-11-18")).toBe("18 nov");
   });
 });
 

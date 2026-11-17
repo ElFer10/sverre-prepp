@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { idagDatum, planNyckel, useLager } from "../data/lager";
+import { idagDatum, planNyckel, uppdatera, useLager } from "../data/lager";
 import { sv } from "../i18n/sv";
 import { useBred } from "../komponenter/useBred";
 import { usePlanera } from "../plan/usePlanera";
@@ -7,7 +7,7 @@ import { datumText, efterOppningRader, klockslag, kockRader, kontrollRader, upps
 import { Gantt } from "./Gantt";
 
 export function Plan() {
-  const { katalog, dagar, installningar, planNycklar } = useLager();
+  const { katalog, dagar, installningar, kanAndra } = useLager();
   const datum = idagDatum();
   const dag = dagar[datum];
   const res = dag?.resultat;
@@ -26,6 +26,11 @@ export function Plan() {
         <p className="tom">
           <a href="#/idag">{sv.plan.ingenPlan}</a>
         </p>
+        {!kanAndra && (
+          <button className="sekundar" onClick={() => void uppdatera()}>
+            {sv.plan.uppdatera}
+          </button>
+        )}
       </div>
     );
   }
@@ -33,7 +38,7 @@ export function Plan() {
   const start = installningar.start;
   const tid = (m: number) => klockslag(m, start);
   const oppning = tid(res.oppning);
-  const inaktuell = planNycklar[datum] !== planNyckel(dag, katalog, installningar);
+  const inaktuell = dag.planNyckel !== planNyckel(dag, katalog, installningar);
   const visaGantt = bred && lage === "gantt";
   const kockar = Array.from({ length: res.kockar }, (_, i) => i + 1);
   const synligaKockar = bred ? kockar : [Math.min(valdKock, res.kockar)];
@@ -67,9 +72,15 @@ export function Plan() {
       )}
 
       <div className="knapp-rad">
-        <button className="primar" disabled={planerar} onClick={() => planera(dag)}>
-          {planerar ? sv.idag.planerar : sv.plan.planeraOm}
-        </button>
+        {kanAndra ? (
+          <button className="primar" disabled={planerar || dag.stangd} onClick={() => planera(dag)}>
+            {planerar ? sv.idag.planerar : sv.plan.planeraOm}
+          </button>
+        ) : (
+          <button className="sekundar" onClick={() => void uppdatera()}>
+            {sv.plan.uppdatera}
+          </button>
+        )}
         <button className="sekundar" disabled={skaparPdf} onClick={pdf}>
           {skaparPdf ? sv.pdf.skapar : sv.plan.laddaNerPdf}
         </button>

@@ -145,6 +145,8 @@ Opcional: orden de preferencia entre las "si da tiempo" (arrastrar para ordenar)
 - Las "si da tiempo" que no se hicieron **pasan a la lista del día siguiente**.
 - Al crear el plan de un día nuevo, la app muestra lo que quedó pendiente del día anterior con un check de "Gjordes det?".
 - Por defecto, si nadie cierra el día: las "si da tiempo" que no estaban programadas o no se marcaron se arrastran, y las obligatorias se dan por hechas (y generan su följdsteg, si tienen).
+- Implementación (fase 4): al abrir Idag un día nuevo, Chef crea el plan y el último día anterior sin cerrar se cierra con esa regla. Lo pendiente llega con "Överförd från …" y la casilla "Gjordes det?" (marcarla lo quita y añade su följdsteg). Si un día se cierra tarde y el siguiente ya existe, el arrastre se añade a ese día sin duplicar. Cada día se arrastra una sola vez.
+- En Stäng dagen la propuesta es: obligatorias "Gjord"; "si da tiempo" "Gjord" si estaban en el plan, si no "Inte gjord". Se ve antes de confirmar lo que pasa al día siguiente.
 - Lo arrastrado conserva su prioridad. Fer puede cambiarla.
 
 ### 4.3 Resultado
@@ -374,6 +376,10 @@ Usar el catálogo de `KATALOG-UTKAST.md` como fixture.
 2. **Interfaz con datos locales**: Katalog, Idag, Plan (Gantt y lista).
 3. **PDF.**
 4. **Supabase**: auth, tablas `planner_*`, lectura de grundrecept, arrastre, följdsteg y cierre del día.
+   - SQL en `supabase/001_planner.sql` (instrucciones en `supabase/README.md`), probado con PGlite.
+   - Migración explícita: con la nube vacía, Chef importa el catálogo de su navegador o el borrador; nunca automático.
+   - Enlace con grundrecept en Katalog → "Koppla till grundrecept" (exactas preseleccionadas, el resto lo decide Fer). Las grundrecept sin configurar aparecen en Katalog como "Ej konfigurerad".
+   - `npm run dev:lokal` mantiene un modo local (sin Supabase) para desarrollo y pruebas.
 5. **PWA + despliegue** en Cloudflare Pages.
 
 ## 14. Decisiones

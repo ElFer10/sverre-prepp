@@ -32,6 +32,12 @@ export function datumText(datum: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+/** "2026-11-18" → "18 nov". */
+export function kortDatum(datum: string): string {
+  const [y, m, d] = datum.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("sv-SE", { day: "numeric", month: "short" }).replace(".", "");
+}
+
 export interface Uppslag {
   forb: (id: string) => Forberedelse | undefined;
   fas: (id: string) => { forb: Forberedelse; fas: Fas; index: number } | undefined;

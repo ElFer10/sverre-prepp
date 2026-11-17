@@ -756,3 +756,89 @@ button.fara {
     min-width: 160px;
   }
 }
+
+/* --- Fase 4: sesión, guardado, enlace, solo lectura --------------------------- */
+
+.mitt {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+}
+
+.inloggning {
+  width: 100%;
+  max-width: 380px;
+  text-align: left;
+}
+
+.topp-status {
+  margin-left: auto;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.sparfel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--varn-bg);
+  color: var(--varn);
+}
+
+fieldset.las {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.liten-bock {
+  min-height: 36px;
+  font-size: 0.85rem;
+  gap: 6px;
+}
+
+.koppla-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.koppla-lista li + li {
+  border-top: 1px solid var(--kant);
+}
+
+.koppla-lista label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  padding: 10px 0;
+}
+
+.koppla-lista .post-namn {
+  flex: 1;
+  font-weight: 600;
+}
+
+.receptsteg summary {
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 32px;
+}
+
+.receptsteg ol {
+  margin: 8px 0 0;
+  padding-left: 22px;
+  color: var(--text-svag);
+}
+
+.post-lista .post-text {
+  min-width: 8.5em;
+}
