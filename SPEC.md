@@ -278,7 +278,13 @@ interface Installningar {
 - El editor de fases muestra los pasos de la receta (solo lectura, si están accesibles en Supabase) junto al formulario, para que crear las fases sea rápido.
 - Cada preparación tiene un botón "Visa recept" que abre la app de recetas (`receptUrlMall`).
 - Import inicial: `KATALOG-UTKAST.md` → fixture JSON y semilla. El nombre se empareja con la grundrecept por nombre; los casos ambiguos se le preguntan a Fer.
-- [PENDIENTE] Nombre real de la tabla y columnas de grundrecept, y ruta de una receta individual. Claude Code: inspeccionar el esquema (`supabase gen types typescript`) antes de escribir la capa de datos.
+- **Esquema confirmado** (código de la app de recetas, `sverrecepter/supabase/`, 2026-11-17):
+  - Grundrecept = tabla `public.recipes` con `type = 'prep'` (`'dish'` = maträtter). Columnas útiles: `id uuid`, `name_sv`, `category`, `status` (`draft | active | archived`), `steps_sv` (pasos, texto con saltos de línea), `minutes`.
+  - Lectura: RLS `member_read` permite `select` a cualquier usuario autenticado con perfil (`public.my_role() is not null`). Las escrituras directas están revocadas; la app de recetas guarda todo con la RPC `kitchen_save`.
+  - Auth: Supabase Auth con correo y contraseña (`signInWithPassword`). Variables: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`.
+  - **Las tablas `planner_*` no deben tener claves foráneas a `recipes`**: `kitchen_save` borra y vuelve a insertar recetas, y una FK haría fallar el guardado de la app de recetas. `receptId` se guarda como `uuid` sin FK; si la receta desaparece, la preparación se marca como huérfana.
+  - Los ids de los datos locales de la app de recetas (`p1`, `sverre-ing-001`…) no son los de la nube: el emparejamiento por nombre se hace contra Supabase.
+- [PENDIENTE] Ruta de una receta individual: la app de recetas **no tiene enlace directo** a una receta (la receta abierta es estado interno; solo existen rutas de página como `/settings`). Opciones: enlazar a la lista (`https://sverre-recepter.pages.dev/`) o añadir a la app de recetas un parámetro `?recept=<id>`.
 - Auth: Supabase Auth, la misma cuenta que en la app de recetas. RLS en las tablas `planner_*` limitado al usuario.
 
 ## 8. Pantallas (textos en sueco)
@@ -379,7 +385,9 @@ Resueltas:
 - [x] Mover la olla al interrumpir: lo hace el cocinero de la fase que interrumpe (§3.10).
 
 Pendientes:
-- [ ] Tabla y columnas de grundrecept en Supabase; ruta URL de una receta.
+- [x] Tabla y columnas de grundrecept: `recipes` con `type = 'prep'` (§7).
+- [ ] Ruta URL de una receta: no existe enlace directo (§7).
+- [ ] Emparejar el catálogo con las grundrecept: 22 de 46 coinciden por nombre exacto (§7).
 - [ ] Revisar los tiempos estimados de `KATALOG-UTKAST.md`.
 - [ ] ¿El pacotizado de sorbetes y helados aparece en el plan como följdsteg?
 - [ ] Fases de Potatis chips, Gröna oliver y Kokta potatis i brynt smör (no tienen pasos en la receta).
