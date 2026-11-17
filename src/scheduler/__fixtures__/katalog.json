@@ -1,0 +1,1493 @@
+[
+  {
+    "id": "brod-smet",
+    "receptId": "",
+    "namn": "Bröd smet",
+    "kategori": "Bröd",
+    "faser": [
+      {
+        "id": "brod-smet-1",
+        "namn": "Förbered 6 pacojetburkar med spritpåsar och plastremsor",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "brod-smet-2",
+        "namn": "Blanda torra ingredienser, tillsätt sirap och filmjölk",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "brod-smet-3",
+        "namn": "Fyll spritpåsarna, ställ i kyl",
+        "typ": "aktiv",
+        "minuter": 10
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "vispat-brynt-smor-steg-1",
+    "receptId": "",
+    "namn": "Vispat brynt smör — steg 1",
+    "kategori": "Bröd",
+    "faser": [
+      {
+        "id": "vispat-brynt-smor-steg-1-1",
+        "namn": "Skär 1 kg smör i bitar",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "vispat-brynt-smor-steg-1-2",
+        "namn": "Bryn smöret till 120 °C",
+        "typ": "tillsyn",
+        "minuter": 20,
+        "tillsyn": {
+          "minuter": 1,
+          "varjeMin": 5
+        },
+        "resurs": "spisplatta"
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true,
+    "fortsattning": "vispat-brynt-smor-steg-2"
+  },
+  {
+    "id": "vispat-brynt-smor-steg-2",
+    "receptId": "",
+    "namn": "Vispat brynt smör — steg 2",
+    "kategori": "Bröd",
+    "faser": [
+      {
+        "id": "vispat-brynt-smor-steg-2-1",
+        "namn": "Mixa brynt smör + 1 kg smör slätt",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "vispat-brynt-smor-steg-2-2",
+        "namn": "Fördela i 4 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 10
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "bakade-apple",
+    "receptId": "",
+    "namn": "Bakade äpple",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "bakade-apple-1",
+        "namn": "Skala, kärna ur och tärna äpplena, strö över socker",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "bakade-apple-2",
+        "namn": "Baka",
+        "typ": "vantan",
+        "minuter": 12,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 175,
+          "tempMax": 175,
+          "bleck": 1
+        }
+      },
+      {
+        "id": "bakade-apple-3",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 15
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "chokladbavaroise",
+    "receptId": "",
+    "namn": "Chokladbavaroise",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "chokladbavaroise-1",
+        "namn": "Blötlägg gelatinblad",
+        "typ": "aktiv",
+        "minuter": 2
+      },
+      {
+        "id": "chokladbavaroise-2",
+        "namn": "Koka mjölk, sjud med äggula och socker till 83 °C",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "chokladbavaroise-3",
+        "namn": "Gelatin, sila över chokladen, mixa",
+        "typ": "aktiv",
+        "minuter": 5,
+        "maxVantanFore": 0
+      },
+      {
+        "id": "chokladbavaroise-4",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      },
+      {
+        "id": "chokladbavaroise-5",
+        "namn": "Lättvispa grädde och vänd ner",
+        "typ": "aktiv",
+        "minuter": 8
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "chokladsorbet",
+    "receptId": "",
+    "namn": "Chokladsorbet",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "chokladsorbet-1",
+        "namn": "Blötlägg gelatin",
+        "typ": "aktiv",
+        "minuter": 2
+      },
+      {
+        "id": "chokladsorbet-2",
+        "namn": "Värm alla ingredienser, lös upp gelatinet",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "chokladsorbet-3",
+        "namn": "Fyll pacojetburkar",
+        "typ": "aktiv",
+        "minuter": 5,
+        "maxVantanFore": 0
+      },
+      {
+        "id": "chokladsorbet-4",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "havresmulor",
+    "receptId": "",
+    "namn": "Havresmulor",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "havresmulor-1",
+        "namn": "Blanda till smulor, fördela på bleck",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "havresmulor-2",
+        "namn": "Baka",
+        "typ": "vantan",
+        "minuter": 10,
+        "maxMinuter": 12,
+        "notering": "Rör om vid behov",
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 170,
+          "tempMax": 170,
+          "bleck": 1
+        }
+      },
+      {
+        "id": "havresmulor-3",
+        "namn": "Svalna helt",
+        "typ": "vantan",
+        "minuter": 20
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "kondenserade-mjolk",
+    "receptId": "",
+    "namn": "Kondenserade mjölk",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "kondenserade-mjolk-1",
+        "namn": "Blanda, fyll 2 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "rostad-vit-choklad",
+    "receptId": "",
+    "namn": "Rostad vit choklad",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "rostad-vit-choklad-1",
+        "namn": "Lägg chokladen på bleck",
+        "typ": "aktiv",
+        "minuter": 3
+      },
+      {
+        "id": "rostad-vit-choklad-2",
+        "namn": "Rosta",
+        "typ": "vantan",
+        "minuter": 5,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 170,
+          "tempMax": 170,
+          "bleck": 1
+        }
+      },
+      {
+        "id": "rostad-vit-choklad-3",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 15
+      },
+      {
+        "id": "rostad-vit-choklad-4",
+        "namn": "Hacka",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "svartvinbarssorbet",
+    "receptId": "",
+    "namn": "Svartvinbärssorbet",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "svartvinbarssorbet-1",
+        "namn": "Blötlägg gelatin",
+        "typ": "aktiv",
+        "minuter": 2
+      },
+      {
+        "id": "svartvinbarssorbet-2",
+        "namn": "Koka upp puré, socker och vatten, tillsätt gelatin",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "svartvinbarssorbet-3",
+        "namn": "Fyll 3 pacojetburkar",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "svartvinbarssorbet-4",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "vaniljglass",
+    "receptId": "",
+    "namn": "Vaniljglass",
+    "kategori": "Efterrätt",
+    "faser": [
+      {
+        "id": "vaniljglass-1",
+        "namn": "Blötlägg gelatin",
+        "typ": "aktiv",
+        "minuter": 2
+      },
+      {
+        "id": "vaniljglass-2",
+        "namn": "Värm till 85 °C",
+        "typ": "tillsyn",
+        "minuter": 15,
+        "tillsyn": {
+          "minuter": 1,
+          "varjeMin": 3
+        },
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "vaniljglass-3",
+        "namn": "Lös upp gelatinet, fyll 4 pacojetburkar",
+        "typ": "aktiv",
+        "minuter": 5,
+        "maxVantanFore": 0
+      },
+      {
+        "id": "vaniljglass-4",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "hasselnotter",
+    "receptId": "",
+    "namn": "Hasselnötter",
+    "kategori": "Förrätt / Förrätter",
+    "faser": [
+      {
+        "id": "hasselnotter-1",
+        "namn": "Rosta",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 160,
+          "tempMax": 170,
+          "bleck": 1
+        }
+      },
+      {
+        "id": "hasselnotter-2",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 15
+      },
+      {
+        "id": "hasselnotter-3",
+        "namn": "Krossa, fyll 1/9-kantin",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "brynt-smor-lojrom",
+    "receptId": "",
+    "namn": "Brynt smör (löjrom)",
+    "kategori": "Förrätt / Förrätter",
+    "faser": [
+      {
+        "id": "brynt-smor-lojrom-1",
+        "namn": "Bryn smöret till 125 °C",
+        "typ": "tillsyn",
+        "minuter": 10,
+        "tillsyn": {
+          "minuter": 1,
+          "varjeMin": 3
+        },
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "brynt-smor-lojrom-2",
+        "namn": "Tillsätt citronsaft, häll i klämflaska",
+        "typ": "aktiv",
+        "minuter": 3
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "dillolja",
+    "receptId": "",
+    "namn": "Dillolja",
+    "kategori": "Förrätt / Förrätter",
+    "faser": [
+      {
+        "id": "dillolja-1",
+        "namn": "Mixa dill, olja och salt till 70 °C",
+        "typ": "aktiv",
+        "minuter": 8,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "dillolja-2",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 20
+      },
+      {
+        "id": "dillolja-3",
+        "namn": "Sila genom kaffefilter",
+        "typ": "vantan",
+        "minuter": 30
+      },
+      {
+        "id": "dillolja-4",
+        "namn": "Häll i liten låda",
+        "typ": "aktiv",
+        "minuter": 2
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "hackad-karljohansvamp",
+    "receptId": "",
+    "namn": "Hackad karljohansvamp",
+    "kategori": "Förrätt / Förrätter",
+    "faser": [
+      {
+        "id": "hackad-karljohansvamp-1",
+        "namn": "Mal svampen",
+        "typ": "aktiv",
+        "minuter": 3,
+        "resurs": "thermomix"
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "svartrot",
+    "receptId": "",
+    "namn": "Svartrot",
+    "kategori": "Förrätt / Förrätter",
+    "faser": [
+      {
+        "id": "svartrot-1",
+        "namn": "Tvätta och skala",
+        "typ": "aktiv",
+        "minuter": 20
+      },
+      {
+        "id": "svartrot-2",
+        "namn": "Krydda och vakuumförpacka",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "svartrot-3",
+        "namn": "Ånga",
+        "typ": "vantan",
+        "minuter": 30,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "anga",
+          "tempMin": 100,
+          "tempMax": 100,
+          "bleck": 1
+        }
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "j-k-majonnas",
+    "receptId": "",
+    "namn": "J-K majonnäs",
+    "kategori": "Kräm",
+    "faser": [
+      {
+        "id": "j-k-majonnas-1",
+        "namn": "Skala och kvarta jordärtskockor, olja och salt",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "j-k-majonnas-2",
+        "namn": "Rosta tills mjuka",
+        "typ": "vantan",
+        "minuter": 20,
+        "maxMinuter": 30,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 180,
+          "tempMax": 180,
+          "bleck": 1
+        }
+      },
+      {
+        "id": "j-k-majonnas-3",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 20
+      },
+      {
+        "id": "j-k-majonnas-4",
+        "namn": "Mixa med äggula, vinäger, senap, salt; emulgera med olja",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "j-k-majonnas-5",
+        "namn": "Fyll 3 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "karljohanmajonnas",
+    "receptId": "",
+    "namn": "Karljohanmajonnäs",
+    "kategori": "Kräm",
+    "faser": [
+      {
+        "id": "karljohanmajonnas-1",
+        "namn": "Mixa svamp till pulver, sedan majonnäs",
+        "typ": "aktiv",
+        "minuter": 12,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "karljohanmajonnas-2",
+        "namn": "Fyll 3 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "misomajonnas",
+    "receptId": "",
+    "namn": "Misomajonnäs",
+    "kategori": "Kräm",
+    "faser": [
+      {
+        "id": "misomajonnas-1",
+        "namn": "Majonnäs med miso",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "misomajonnas-2",
+        "namn": "Fyll 3 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "ostkram",
+    "receptId": "",
+    "namn": "Ostkräm",
+    "kategori": "Kräm",
+    "faser": [
+      {
+        "id": "ostkram-1",
+        "namn": "Riv osten",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "ostkram-2",
+        "namn": "Majonnäs med ost",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "ostkram-3",
+        "namn": "Fyll 3 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "rotsellerikram",
+    "receptId": "",
+    "namn": "Rotsellerikräm",
+    "kategori": "Kräm",
+    "faser": [
+      {
+        "id": "rotsellerikram-1",
+        "namn": "Skala och tärna 2 kg rotselleri, salt, olja, lite vatten",
+        "typ": "aktiv",
+        "minuter": 20
+      },
+      {
+        "id": "rotsellerikram-2",
+        "namn": "Tillaga",
+        "typ": "vantan",
+        "minuter": 30,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 180,
+          "tempMax": 180,
+          "bleck": 2
+        }
+      },
+      {
+        "id": "rotsellerikram-3",
+        "namn": "Mixa",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "thermomix"
+      },
+      {
+        "id": "rotsellerikram-4",
+        "namn": "Smaka av, fyll 2 kantiner",
+        "typ": "aktiv",
+        "minuter": 3
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "citronsteklokar",
+    "receptId": "",
+    "namn": "Citronsteklökar",
+    "kategori": "Picklat",
+    "faser": [
+      {
+        "id": "citronsteklokar-1",
+        "namn": "Skala och halvera lökarna",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "citronsteklokar-2",
+        "namn": "Koka upp citronsaft och socker",
+        "typ": "vantan",
+        "minuter": 8,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "citronsteklokar-3",
+        "namn": "Koka löken 5 min",
+        "typ": "aktiv",
+        "minuter": 5,
+        "maxVantanFore": 0,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "citronsteklokar-4",
+        "namn": "Svalna i lagen",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "inlagd-fankal",
+    "receptId": "",
+    "namn": "Inlagd fänkål",
+    "kategori": "Picklat",
+    "faser": [
+      {
+        "id": "inlagd-fankal-1",
+        "namn": "Skiva fänkål på mandolin",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "inlagd-fankal-2",
+        "namn": "Koka upp 1-2-3-lag",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "inlagd-fankal-3",
+        "namn": "Häll över, tynga ner",
+        "typ": "aktiv",
+        "minuter": 3
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "inlagda-granskott",
+    "receptId": "",
+    "namn": "Inlagda granskott",
+    "kategori": "Picklat",
+    "faser": [
+      {
+        "id": "inlagda-granskott-1",
+        "namn": "Koka upp 1-2-3-lag",
+        "typ": "vantan",
+        "minuter": 5,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "inlagda-granskott-2",
+        "namn": "Häll över granskotten",
+        "typ": "aktiv",
+        "minuter": 2
+      },
+      {
+        "id": "inlagda-granskott-3",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "picklad-rotselleri",
+    "receptId": "",
+    "namn": "Picklad rotselleri",
+    "kategori": "Picklat",
+    "faser": [
+      {
+        "id": "picklad-rotselleri-1",
+        "namn": "Skala och skiva på mandolin",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "picklad-rotselleri-2",
+        "namn": "Koka upp 1-2-3-lag",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "picklad-rotselleri-3",
+        "namn": "Häll över, tynga ner",
+        "typ": "aktiv",
+        "minuter": 3
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "picklade-grona-tomater",
+    "receptId": "",
+    "namn": "Picklade gröna tomater",
+    "kategori": "Picklat",
+    "faser": [
+      {
+        "id": "picklade-grona-tomater-1",
+        "namn": "Skiva på mandolin",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "picklade-grona-tomater-2",
+        "namn": "Koka upp 1-2-3-lag",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "picklade-grona-tomater-3",
+        "namn": "Svalna till ljummen",
+        "typ": "vantan",
+        "minuter": 20
+      },
+      {
+        "id": "picklade-grona-tomater-4",
+        "namn": "Häll över, tynga ner",
+        "typ": "aktiv",
+        "minuter": 3
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "syrad-spetskal",
+    "receptId": "",
+    "namn": "Syrad spetskål",
+    "kategori": "Picklat",
+    "faser": [
+      {
+        "id": "syrad-spetskal-1",
+        "namn": "Skala och skiva löken på mandolin",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "syrad-spetskal-2",
+        "namn": "Koka upp 1-2-3-lag med senapsfrö",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "syrad-spetskal-3",
+        "namn": "Häll den varma lagen över löken",
+        "typ": "aktiv",
+        "minuter": 3,
+        "maxVantanFore": 0
+      },
+      {
+        "id": "syrad-spetskal-4",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      },
+      {
+        "id": "syrad-spetskal-5",
+        "namn": "Skär spetskålen, blanda med löken och lagen i djupt bleck, täck",
+        "typ": "aktiv",
+        "minuter": 15
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "tartar-kott",
+    "receptId": "",
+    "namn": "Tartar kött",
+    "kategori": "Protein",
+    "faser": [
+      {
+        "id": "tartar-kott-1",
+        "namn": "Kör köttet i köttkvarnen",
+        "typ": "aktiv",
+        "minuter": 10
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "panerad-schnitzel",
+    "receptId": "",
+    "namn": "Panerad schnitzel",
+    "kategori": "Protein",
+    "faser": [
+      {
+        "id": "panerad-schnitzel-1",
+        "namn": "Putsa, banka och dubbelpanera",
+        "typ": "aktiv",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "potatis-chips",
+    "receptId": "",
+    "namn": "Potatis chips",
+    "kategori": "Snacks",
+    "faser": [],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "grona-oliver",
+    "receptId": "",
+    "namn": "Gröna oliver",
+    "kategori": "Snacks",
+    "faser": [],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "brynt-smor-3-l",
+    "receptId": "",
+    "namn": "Brynt smör (3 l)",
+    "kategori": "Såser",
+    "faser": [
+      {
+        "id": "brynt-smor-3-l-1",
+        "namn": "Skär 3 kg smör i bitar",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "brynt-smor-3-l-2",
+        "namn": "Smält och bryn under omrörning till 120–122 °C",
+        "typ": "tillsyn",
+        "minuter": 25,
+        "tillsyn": {
+          "minuter": 1,
+          "varjeMin": 4
+        },
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "brynt-smor-3-l-3",
+        "namn": "Timjan, smaka av med salt och vinäger",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "vinagersky",
+    "receptId": "",
+    "namn": "Vinägersky",
+    "kategori": "Såser",
+    "faser": [
+      {
+        "id": "vinagersky-1",
+        "namn": "Blanda alla ingredienser",
+        "typ": "aktiv",
+        "minuter": 3,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "vinagersky-2",
+        "namn": "Reducera till hälften, skumma regelbundet",
+        "typ": "tillsyn",
+        "minuter": 150,
+        "tillsyn": {
+          "minuter": 1,
+          "varjeMin": 15
+        },
+        "avbrytbar": true,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "vinagersky-3",
+        "namn": "Sila ner i stor plastlåda",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "vinagersky-4",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": true,
+    "aktiv": true
+  },
+  {
+    "id": "smoradsky",
+    "receptId": "",
+    "namn": "Smöradsky",
+    "kategori": "Såser",
+    "faser": [
+      {
+        "id": "smoradsky-1",
+        "namn": "Värm vinägerskyn, vispa ner kallt smör",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      }
+    ],
+    "beroendeAv": [
+      "vinagersky"
+    ],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "smorsas",
+    "receptId": "",
+    "namn": "Smörsås",
+    "kategori": "Såser",
+    "faser": [
+      {
+        "id": "smorsas-1",
+        "namn": "Skala schalottenlök och vitlök",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "smorsas-2",
+        "namn": "Koka upp vin, schalottenlök, vitlök och timjan",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "smorsas-3",
+        "namn": "Reducera till hälften",
+        "typ": "vantan",
+        "minuter": 60,
+        "maxMinuter": 90,
+        "avbrytbar": true,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "smorsas-4",
+        "namn": "Sila vinreduktionen",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "smorsas-5",
+        "namn": "Tillsätt grädde och smör, värm tills smält",
+        "typ": "aktiv",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "smorsas-6",
+        "namn": "Xantan, stavmixa, smaka av",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "smorsas-7",
+        "namn": "Svalna i stor plastlåda",
+        "typ": "vantan",
+        "minuter": 30
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": true,
+    "aktiv": true
+  },
+  {
+    "id": "kokta-potatis-i-brynt-smor",
+    "receptId": "",
+    "namn": "Kokta potatis i brynt smör",
+    "kategori": "Såser",
+    "faser": [],
+    "beroendeAv": [
+      "friterad-potatis-kokt",
+      "brynt-smor-3-l"
+    ],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "broccoli",
+    "receptId": "",
+    "namn": "Broccoli",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "broccoli-1",
+        "namn": "Dela i buketter, lägg i 1/3 GN-kantin",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "broccoli-2",
+        "namn": "Koka upp vatten med salt och bikarbonat",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "broccoli-3",
+        "namn": "Häll över broccolin, tynga ner",
+        "typ": "aktiv",
+        "minuter": 2,
+        "maxVantanFore": 0
+      },
+      {
+        "id": "broccoli-4",
+        "namn": "Låt stå",
+        "typ": "vantan",
+        "minuter": 20
+      },
+      {
+        "id": "broccoli-5",
+        "namn": "Kontrollera konsistensen",
+        "typ": "aktiv",
+        "minuter": 2
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "senast-mojligt",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "friterad-potatis-kokt",
+    "receptId": "",
+    "namn": "Friterad potatis (kokt)",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "friterad-potatis-kokt-1",
+        "namn": "Halvera potatisen, täck med vatten, salt",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "friterad-potatis-kokt-2",
+        "namn": "Koka upp",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "friterad-potatis-kokt-3",
+        "namn": "Koka tills mjuk",
+        "typ": "vantan",
+        "minuter": 20,
+        "maxMinuter": 30,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "friterad-potatis-kokt-4",
+        "namn": "Häll av",
+        "typ": "aktiv",
+        "minuter": 3,
+        "maxVantanFore": 0
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "gulbetor",
+    "receptId": "",
+    "namn": "Gulbetor",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "gulbetor-1",
+        "namn": "Kvarta, olja och salt",
+        "typ": "aktiv",
+        "minuter": 10
+      },
+      {
+        "id": "gulbetor-2",
+        "namn": "Rosta",
+        "typ": "vantan",
+        "minuter": 30,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 180,
+          "tempMax": 180,
+          "bleck": 1
+        }
+      },
+      {
+        "id": "gulbetor-3",
+        "namn": "Kontrollera att de är mjuka",
+        "typ": "aktiv",
+        "minuter": 2
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "hangt-graddfil-steg-1",
+    "receptId": "",
+    "namn": "Hängt gräddfil — steg 1",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "hangt-graddfil-steg-1-1",
+        "namn": "Kaffefilter i sil, häll i gräddfilen, täck, ställ i kyl",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true,
+    "fortsattning": "hangt-graddfil-steg-2"
+  },
+  {
+    "id": "hangt-graddfil-steg-2",
+    "receptId": "",
+    "namn": "Hängt gräddfil — steg 2",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "hangt-graddfil-steg-2-1",
+        "namn": "Fyll 2 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "mandlar",
+    "receptId": "",
+    "namn": "Mandlar",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "mandlar-1",
+        "namn": "Krossa marconamandlar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "rostade-jordartskockor",
+    "receptId": "",
+    "namn": "Rostade jordärtskockor",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "rostade-jordartskockor-1",
+        "namn": "Halvera eller kvarta, olja och salt",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "rostade-jordartskockor-2",
+        "namn": "Rosta",
+        "typ": "vantan",
+        "minuter": 30,
+        "resurs": "ugn",
+        "ugn": {
+          "lage": "varmluft",
+          "tempMin": 180,
+          "tempMax": 180,
+          "bleck": 2
+        }
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "rostade-palsternacka",
+    "receptId": "",
+    "namn": "Rostade palsternacka",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "rostade-palsternacka-1",
+        "namn": "Skala och skär i sneda bitar",
+        "typ": "aktiv",
+        "minuter": 20
+      },
+      {
+        "id": "rostade-palsternacka-2",
+        "namn": "Koka upp",
+        "typ": "vantan",
+        "minuter": 10,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "rostade-palsternacka-3",
+        "namn": "Koka tills mjuka",
+        "typ": "vantan",
+        "minuter": 20,
+        "maxMinuter": 30,
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "rostade-palsternacka-4",
+        "namn": "Häll av, fyll 1/3-kantiner",
+        "typ": "aktiv",
+        "minuter": 5,
+        "maxVantanFore": 0
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "rodloksmarmelad",
+    "receptId": "",
+    "namn": "Rödlöksmarmelad",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "rodloksmarmelad-1",
+        "namn": "Skala och skiva rödlök",
+        "typ": "aktiv",
+        "minuter": 15
+      },
+      {
+        "id": "rodloksmarmelad-2",
+        "namn": "Svetta, tillsätt socker och vinäger, koka till marmelad",
+        "typ": "tillsyn",
+        "minuter": 45,
+        "maxMinuter": 60,
+        "tillsyn": {
+          "minuter": 2,
+          "varjeMin": 5
+        },
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "rodloksmarmelad-3",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 30
+      },
+      {
+        "id": "rodloksmarmelad-4",
+        "namn": "Fyll 3 spritpåsar",
+        "typ": "aktiv",
+        "minuter": 5
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "normal",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  },
+  {
+    "id": "aggskum",
+    "receptId": "",
+    "namn": "Äggskum",
+    "kategori": "Tillbehör",
+    "faser": [
+      {
+        "id": "aggskum-1",
+        "namn": "Gör brynt smör",
+        "typ": "tillsyn",
+        "minuter": 8,
+        "tillsyn": {
+          "minuter": 1,
+          "varjeMin": 3
+        },
+        "resurs": "spisplatta"
+      },
+      {
+        "id": "aggskum-2",
+        "namn": "Svalna",
+        "typ": "vantan",
+        "minuter": 20
+      },
+      {
+        "id": "aggskum-3",
+        "namn": "Mixa äggvita, äggula och smör, salta",
+        "typ": "aktiv",
+        "minuter": 5
+      },
+      {
+        "id": "aggskum-4",
+        "namn": "Fyll sifonen, ladda 2 patroner",
+        "typ": "aktiv",
+        "minuter": 3
+      }
+    ],
+    "beroendeAv": [],
+    "farskhet": "senast-mojligt",
+    "kanAvslutasEfterOppning": false,
+    "aktiv": true
+  }
+]
