@@ -6,6 +6,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { slug } from "../src/katalog/katalog.ts";
 import type { Fas, Forberedelse, UgnLage } from "../src/scheduler/types.ts";
 
 const ENTRADA = new URL("../KATALOG-UTKAST.md", import.meta.url);
@@ -20,16 +21,6 @@ const ALIAS_BEROENDE: Record<string, string> = {
   "Friterad potatis": "Friterad potatis (kokt)",
   "Brynt smör": "Brynt smör (3 l)",
 };
-
-export function slug(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/[åä]/g, "a")
-    .replace(/ö/g, "o")
-    .replace(/é/g, "e")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
 
 function parseRango(s: string): { min: number; max?: number } {
   const [a, b] = s.split("–").map(Number);
@@ -151,7 +142,7 @@ export function parsearKatalog(md: string): Forberedelse[] {
   return borradores.map((b) => {
     const f: Forberedelse = {
       id: slug(b.namn),
-      receptId: "", // [PENDIENTE] se empareja con la grundrecept en la fase 4
+      // Sin receptId: se enlaza con la grundrecept al emparejar con Supabase (fase 4)
       namn: b.namn,
       kategori: b.kategori,
       faser: b.faser,

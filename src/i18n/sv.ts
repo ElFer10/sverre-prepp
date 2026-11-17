@@ -33,12 +33,18 @@ export const sv = {
     utanKategori: "Övrigt",
     antalMoment: (n: number) => (n === 1 ? "1 moment" : `${n} moment`),
     ingaTraffar: "Inga förberedelser matchar sökningen.",
+    egen: "Egen",
+    egenForklaring: "Egen förberedelse – finns inte i receptappen",
+    ny: "Ny förberedelse",
     aterstall: "Återställ katalogen",
     aterstallFraga: "Återställ katalogen till utkastet? Dina ändringar försvinner.",
   },
 
   redigera: {
     rubrik: "Redigera förberedelse",
+    nyRubrik: "Ny förberedelse",
+    taBort: "Ta bort förberedelse",
+    taBortFraga: (namn: string) => `Ta bort ${namn} från katalogen? Den tas också bort som beroende och följdsteg.`,
     namn: "Namn",
     kategori: "Kategori",
     moment: "Moment",
@@ -72,6 +78,7 @@ export const sv = {
 
   valideringsfel: {
     namnSaknas: "Namn saknas",
+    namnFinns: (namn: string) => `Det finns redan en förberedelse som heter ${namn}`,
     ingaMoment: "Lägg till minst ett moment",
     momentNamn: (n: number) => `Moment ${n}: beskrivning saknas`,
     minuter: (n: number) => `Moment ${n}: minuter måste vara minst 1`,

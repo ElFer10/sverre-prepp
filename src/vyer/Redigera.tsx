@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { sparaForberedelse, useLager } from "../data/lager";
+import { laggTillForberedelse, sparaForberedelse, taBortForberedelse, useLager } from "../data/lager";
+import { medId, nyttForberedelseId } from "../katalog/katalog";
 import { sv } from "../i18n/sv";
 import { nyttFasId, stadaFas, valideraForberedelse } from "../katalog/validera";
 import type { Fas, Forberedelse, Resurs, UgnLage } from "../scheduler/types";
@@ -12,10 +13,26 @@ const tillbaka = () => {
 const tal = (v: string) => (v.trim() === "" ? NaN : Number(v));
 const visa = (n: number | undefined) => (n === undefined || Number.isNaN(n) ? "" : String(n));
 
-export function Redigera(props: { id: string }) {
+/** Borrador vacío para una preparación propia nueva (id definitivo al guardar). */
+const NY_ID = "ny";
+const tomForberedelse = (): Forberedelse => ({
+  id: NY_ID,
+  namn: "",
+  faser: [{ id: `${NY_ID}-1`, namn: "", typ: "aktiv", minuter: 5 }],
+  beroendeAv: [],
+  farskhet: "normal",
+  kanAvslutasEfterOppning: false,
+  aktiv: true,
+});
+
+/** `id === null` → crear una preparación propia nueva. */
+export function Redigera(props: { id: string | null }) {
   const { katalog, installningar } = useLager();
-  const original = katalog.find((f) => f.id === props.id);
-  const [utkast, setUtkast] = useState<Forberedelse | undefined>(() => (original ? structuredClone(original) : undefined));
+  const ny = props.id === null;
+  const original = ny ? undefined : katalog.find((f) => f.id === props.id);
+  const [utkast, setUtkast] = useState<Forberedelse | undefined>(() =>
+    ny ? tomForberedelse() : original ? structuredClone(original) : undefined,
+  );
   const [fel, setFel] = useState<string[]>([]);
 
   if (!utkast) {
@@ -43,7 +60,7 @@ export function Redigera(props: { id: string }) {
     satt({ faser: [...f.faser, { id: nyttFasId(f), namn: "", typ: "aktiv", minuter: 5 }] });
 
   const spara = () => {
-    const stadad: Forberedelse = {
+    let stadad: Forberedelse = {
       ...f,
       namn: f.namn.trim(),
       kategori: f.kategori?.trim() || undefined,
@@ -53,13 +70,21 @@ export function Redigera(props: { id: string }) {
     if (!stadad.kontrolleraFore?.length) delete stadad.kontrolleraFore;
     if (!stadad.kategori) delete stadad.kategori;
     if (!stadad.fortsattning) delete stadad.fortsattning;
+    if (ny) stadad = medId(stadad, nyttForberedelseId(stadad.namn, katalog));
     const e = valideraForberedelse(stadad, katalog);
     setFel(e);
     if (e.length) {
       window.scrollTo(0, 0);
       return;
     }
-    sparaForberedelse(stadad);
+    if (ny) laggTillForberedelse(stadad);
+    else sparaForberedelse(stadad);
+    tillbaka();
+  };
+
+  const taBort = () => {
+    if (!window.confirm(sv.redigera.taBortFraga(f.namn))) return;
+    taBortForberedelse(f.id);
     tillbaka();
   };
 
@@ -72,7 +97,7 @@ export function Redigera(props: { id: string }) {
         <button className="ikon" aria-label={sv.allmant.tillbaka} onClick={tillbaka}>
           ‹
         </button>
-        <h1>{sv.redigera.rubrik}</h1>
+        <h1>{ny ? sv.redigera.nyRubrik : sv.redigera.rubrik}</h1>
       </div>
 
       {fel.length > 0 && (
@@ -95,10 +120,12 @@ export function Redigera(props: { id: string }) {
           <span className="etikett">{sv.redigera.kategori}</span>
           <input value={f.kategori ?? ""} onChange={(e) => satt({ kategori: e.target.value })} />
         </label>
-        {receptUrl && (
+        {receptUrl ? (
           <a className="lank-knapp" href={receptUrl} target="_blank" rel="noreferrer">
             {sv.redigera.visaRecept}
           </a>
+        ) : (
+          <p className="liten">{sv.katalog.egenForklaring}</p>
         )}
       </section>
 
@@ -201,6 +228,14 @@ export function Redigera(props: { id: string }) {
           />
         </label>
       </section>
+
+      {!ny && !f.receptId && (
+        <div className="knapp-rad">
+          <button className="fara" onClick={taBort}>
+            {sv.redigera.taBort}
+          </button>
+        </div>
+      )}
 
       <div className="atgard-rad">
         <button className="sekundar" onClick={tillbaka}>

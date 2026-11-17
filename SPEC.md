@@ -229,7 +229,7 @@ interface Fas {
 
 interface Forberedelse {
   id: string;
-  receptId: string;            // id de la grundrecept en la app de recetas
+  receptId?: string;           // uuid de la grundrecept; sin valor = preparación propia del planner
   namn: string;                // caché; la fuente de verdad es la app de recetas
   faser: Fas[];
   beroendeAv: string[];        // dependencias
@@ -265,7 +265,7 @@ interface Installningar {
   pacojet: { antal: number; rengoringMin: number };                  // 1, 3
   avbrottMin: number;          // 1: retirar o devolver una olla
   iterationer: number;         // 500
-  receptUrlMall: string;       // [PENDIENTE confirmar ruta] p. ej. "https://sverre-recepter.pages.dev/#/recept/{id}"
+  receptUrlMall: string;       // "https://sverre-recepter.pages.dev/?recept={id}"
 }
 ```
 
@@ -273,7 +273,7 @@ interface Installningar {
 
 - Mismo proyecto de Supabase. Las tablas del planner van aparte (prefijo `planner_`).
 - El planner **solo lee** las grundrecept (id, nombre, categoría). **Nunca escribe** en las tablas de la app de recetas. Las maträtter no se usan.
-- El catálogo del planner = grundrecept + los datos de tiempo y recursos del planner, unidos por `receptId`.
+- El catálogo del planner = grundrecept + los datos de tiempo y recursos del planner, unidos por `receptId`, más las preparaciones propias del planner.
 - Si una grundrecept todavía no tiene fases, se marca "Ej konfigurerad" y no se puede planificar hasta completarla.
 - El editor de fases muestra los pasos de la receta (solo lectura, si están accesibles en Supabase) junto al formulario, para que crear las fases sea rápido.
 - Cada preparación tiene un botón "Visa recept" que abre la app de recetas (`receptUrlMall`).
@@ -284,7 +284,8 @@ interface Installningar {
   - Auth: Supabase Auth con correo y contraseña (`signInWithPassword`). Variables: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`.
   - **Las tablas `planner_*` no deben tener claves foráneas a `recipes`**: `kitchen_save` borra y vuelve a insertar recetas, y una FK haría fallar el guardado de la app de recetas. `receptId` se guarda como `uuid` sin FK; si la receta desaparece, la preparación se marca como huérfana.
   - Los ids de los datos locales de la app de recetas (`p1`, `sverre-ing-001`…) no son los de la nube: el emparejamiento por nombre se hace contra Supabase.
-- [PENDIENTE] Ruta de una receta individual: la app de recetas **no tiene enlace directo** a una receta (la receta abierta es estado interno; solo existen rutas de página como `/settings`). Opciones: enlazar a la lista (`https://sverre-recepter.pages.dev/`) o añadir a la app de recetas un parámetro `?recept=<id>`.
+- Ruta de una receta: `https://sverre-recepter.pages.dev/?recept=<id>` abre esa receta (añadido a la app de recetas a petición de Fer, 2026-11-18).
+- **Preparaciones propias del planner** (decisión de Fer, 2026-11-18): una preparación puede no tener grundrecept (`receptId` vacío), p. ej. "Mandlar". Se crean y borran en Katalog; no tienen "Visa recept". Al emparejar con Supabase, las que coinciden con una grundrecept se enlazan y el resto quedan como propias.
 - Auth: Supabase Auth, la misma cuenta que en la app de recetas. RLS en las tablas `planner_*` limitado al usuario.
 
 ## 8. Pantallas (textos en sueco)
@@ -386,7 +387,8 @@ Resueltas:
 
 Pendientes:
 - [x] Tabla y columnas de grundrecept: `recipes` con `type = 'prep'` (§7).
-- [ ] Ruta URL de una receta: no existe enlace directo (§7).
+- [x] Ruta URL de una receta: `?recept=<id>` (§7).
+- [x] Preparaciones propias del planner, sin grundrecept (§7).
 - [ ] Emparejar el catálogo con las grundrecept: 22 de 46 coinciden por nombre exacto (§7).
 - [ ] Revisar los tiempos estimados de `KATALOG-UTKAST.md`.
 - [ ] ¿El pacotizado de sorbetes y helados aparece en el plan como följdsteg?

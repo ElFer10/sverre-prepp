@@ -13,7 +13,7 @@ const FLIKAR: Array<{ vy: Rutt["vy"]; hash: string; text: string; ikon: string }
 
 export default function App() {
   const rutt = useRutt();
-  const aktivFlik = rutt.vy === "redigera" ? "katalog" : rutt.vy;
+  const aktivFlik = rutt.vy === "redigera" || rutt.vy === "ny" ? "katalog" : rutt.vy;
   return (
     <div className="app">
       <header className="topp">
@@ -31,6 +31,7 @@ export default function App() {
         {rutt.vy === "plan" && <Plan />}
         {rutt.vy === "katalog" && <Katalog />}
         {rutt.vy === "redigera" && <Redigera key={rutt.id} id={rutt.id} />}
+        {rutt.vy === "ny" && <Redigera key="ny" id={null} />}
       </main>
       <nav className="flikar flikar-botten">
         {FLIKAR.map((f) => (

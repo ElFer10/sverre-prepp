@@ -20,7 +20,12 @@ export function Katalog() {
 
   return (
     <div className="sida">
-      <h1>{sv.katalog.rubrik}</h1>
+      <div className="rubrik-rad rubrik-rad-knapp">
+        <h1>{sv.katalog.rubrik}</h1>
+        <a className="knapp-lank" href="#/ny-forberedelse">
+          + {sv.katalog.ny}
+        </a>
+      </div>
       <input
         type="search"
         placeholder={sv.katalog.sokPlatshallare}
@@ -42,6 +47,11 @@ export function Katalog() {
                       <span className="post-namn">{f.namn}</span>
                       <span className="liten">{konf ? sv.katalog.antalMoment(f.faser.length) : ""}</span>
                     </span>
+                    {!f.receptId && (
+                      <span className="markor" title={sv.katalog.egenForklaring}>
+                        {sv.katalog.egen}
+                      </span>
+                    )}
                     {!f.aktiv && <span className="markor">{sv.katalog.inaktiv}</span>}
                     <span className={`markor ${konf ? "ok" : "varn"}`}>
                       {konf ? sv.katalog.konfigurerad : sv.katalog.ejKonfigurerad}

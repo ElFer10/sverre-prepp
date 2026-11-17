@@ -1,7 +1,6 @@
 [
   {
     "id": "brod-smet",
-    "receptId": "",
     "namn": "Bröd smet",
     "kategori": "Bröd",
     "faser": [
@@ -31,7 +30,6 @@
   },
   {
     "id": "vispat-brynt-smor-steg-1",
-    "receptId": "",
     "namn": "Vispat brynt smör — steg 1",
     "kategori": "Bröd",
     "faser": [
@@ -61,7 +59,6 @@
   },
   {
     "id": "vispat-brynt-smor-steg-2",
-    "receptId": "",
     "namn": "Vispat brynt smör — steg 2",
     "kategori": "Bröd",
     "faser": [
@@ -86,7 +83,6 @@
   },
   {
     "id": "bakade-apple",
-    "receptId": "",
     "namn": "Bakade äpple",
     "kategori": "Efterrätt",
     "faser": [
@@ -123,7 +119,6 @@
   },
   {
     "id": "chokladbavaroise",
-    "receptId": "",
     "namn": "Chokladbavaroise",
     "kategori": "Efterrätt",
     "faser": [
@@ -167,7 +162,6 @@
   },
   {
     "id": "chokladsorbet",
-    "receptId": "",
     "namn": "Chokladsorbet",
     "kategori": "Efterrätt",
     "faser": [
@@ -205,7 +199,6 @@
   },
   {
     "id": "havresmulor",
-    "receptId": "",
     "namn": "Havresmulor",
     "kategori": "Efterrätt",
     "faser": [
@@ -244,7 +237,6 @@
   },
   {
     "id": "kondenserade-mjolk",
-    "receptId": "",
     "namn": "Kondenserade mjölk",
     "kategori": "Efterrätt",
     "faser": [
@@ -262,7 +254,6 @@
   },
   {
     "id": "rostad-vit-choklad",
-    "receptId": "",
     "namn": "Rostad vit choklad",
     "kategori": "Efterrätt",
     "faser": [
@@ -305,7 +296,6 @@
   },
   {
     "id": "svartvinbarssorbet",
-    "receptId": "",
     "namn": "Svartvinbärssorbet",
     "kategori": "Efterrätt",
     "faser": [
@@ -342,7 +332,6 @@
   },
   {
     "id": "vaniljglass",
-    "receptId": "",
     "namn": "Vaniljglass",
     "kategori": "Efterrätt",
     "faser": [
@@ -384,7 +373,6 @@
   },
   {
     "id": "hasselnotter",
-    "receptId": "",
     "namn": "Hasselnötter",
     "kategori": "Förrätt / Förrätter",
     "faser": [
@@ -421,7 +409,6 @@
   },
   {
     "id": "brynt-smor-lojrom",
-    "receptId": "",
     "namn": "Brynt smör (löjrom)",
     "kategori": "Förrätt / Förrätter",
     "faser": [
@@ -450,7 +437,6 @@
   },
   {
     "id": "dillolja",
-    "receptId": "",
     "namn": "Dillolja",
     "kategori": "Förrätt / Förrätter",
     "faser": [
@@ -487,7 +473,6 @@
   },
   {
     "id": "hackad-karljohansvamp",
-    "receptId": "",
     "namn": "Hackad karljohansvamp",
     "kategori": "Förrätt / Förrätter",
     "faser": [
@@ -506,7 +491,6 @@
   },
   {
     "id": "svartrot",
-    "receptId": "",
     "namn": "Svartrot",
     "kategori": "Förrätt / Förrätter",
     "faser": [
@@ -543,7 +527,6 @@
   },
   {
     "id": "j-k-majonnas",
-    "receptId": "",
     "namn": "J-K majonnäs",
     "kategori": "Kräm",
     "faser": [
@@ -594,7 +577,6 @@
   },
   {
     "id": "karljohanmajonnas",
-    "receptId": "",
     "namn": "Karljohanmajonnäs",
     "kategori": "Kräm",
     "faser": [
@@ -619,7 +601,6 @@
   },
   {
     "id": "misomajonnas",
-    "receptId": "",
     "namn": "Misomajonnäs",
     "kategori": "Kräm",
     "faser": [
@@ -644,7 +625,6 @@
   },
   {
     "id": "ostkram",
-    "receptId": "",
     "namn": "Ostkräm",
     "kategori": "Kräm",
     "faser": [
@@ -675,7 +655,6 @@
   },
   {
     "id": "rotsellerikram",
-    "receptId": "",
     "namn": "Rotsellerikräm",
     "kategori": "Kräm",
     "faser": [
@@ -719,7 +698,6 @@
   },
   {
     "id": "citronsteklokar",
-    "receptId": "",
     "namn": "Citronsteklökar",
     "kategori": "Picklat",
     "faser": [
@@ -758,7 +736,6 @@
   },
   {
     "id": "inlagd-fankal",
-    "receptId": "",
     "namn": "Inlagd fänkål",
     "kategori": "Picklat",
     "faser": [
@@ -789,7 +766,6 @@
   },
   {
     "id": "inlagda-granskott",
-    "receptId": "",
     "namn": "Inlagda granskott",
     "kategori": "Picklat",
     "faser": [
@@ -820,7 +796,6 @@
   },
   {
     "id": "picklad-rotselleri",
-    "receptId": "",
     "namn": "Picklad rotselleri",
     "kategori": "Picklat",
     "faser": [
@@ -851,7 +826,6 @@
   },
   {
     "id": "picklade-grona-tomater",
-    "receptId": "",
     "namn": "Picklade gröna tomater",
     "kategori": "Picklat",
     "faser": [
@@ -888,7 +862,6 @@
   },
   {
     "id": "syrad-spetskal",
-    "receptId": "",
     "namn": "Syrad spetskål",
     "kategori": "Picklat",
     "faser": [
@@ -932,7 +905,6 @@
   },
   {
     "id": "tartar-kott",
-    "receptId": "",
     "namn": "Tartar kött",
     "kategori": "Protein",
     "faser": [
@@ -950,7 +922,6 @@
   },
   {
     "id": "panerad-schnitzel",
-    "receptId": "",
     "namn": "Panerad schnitzel",
     "kategori": "Protein",
     "faser": [
@@ -968,7 +939,6 @@
   },
   {
     "id": "potatis-chips",
-    "receptId": "",
     "namn": "Potatis chips",
     "kategori": "Snacks",
     "faser": [],
@@ -979,7 +949,6 @@
   },
   {
     "id": "grona-oliver",
-    "receptId": "",
     "namn": "Gröna oliver",
     "kategori": "Snacks",
     "faser": [],
@@ -990,7 +959,6 @@
   },
   {
     "id": "brynt-smor-3-l",
-    "receptId": "",
     "namn": "Brynt smör (3 l)",
     "kategori": "Såser",
     "faser": [
@@ -1025,7 +993,6 @@
   },
   {
     "id": "vinagersky",
-    "receptId": "",
     "namn": "Vinägersky",
     "kategori": "Såser",
     "faser": [
@@ -1068,7 +1035,6 @@
   },
   {
     "id": "smoradsky",
-    "receptId": "",
     "namn": "Smöradsky",
     "kategori": "Såser",
     "faser": [
@@ -1089,7 +1055,6 @@
   },
   {
     "id": "smorsas",
-    "receptId": "",
     "namn": "Smörsås",
     "kategori": "Såser",
     "faser": [
@@ -1148,7 +1113,6 @@
   },
   {
     "id": "kokta-potatis-i-brynt-smor",
-    "receptId": "",
     "namn": "Kokta potatis i brynt smör",
     "kategori": "Såser",
     "faser": [],
@@ -1162,7 +1126,6 @@
   },
   {
     "id": "broccoli",
-    "receptId": "",
     "namn": "Broccoli",
     "kategori": "Tillbehör",
     "faser": [
@@ -1206,7 +1169,6 @@
   },
   {
     "id": "friterad-potatis-kokt",
-    "receptId": "",
     "namn": "Friterad potatis (kokt)",
     "kategori": "Tillbehör",
     "faser": [
@@ -1246,7 +1208,6 @@
   },
   {
     "id": "gulbetor",
-    "receptId": "",
     "namn": "Gulbetor",
     "kategori": "Tillbehör",
     "faser": [
@@ -1283,7 +1244,6 @@
   },
   {
     "id": "hangt-graddfil-steg-1",
-    "receptId": "",
     "namn": "Hängt gräddfil — steg 1",
     "kategori": "Tillbehör",
     "faser": [
@@ -1302,7 +1262,6 @@
   },
   {
     "id": "hangt-graddfil-steg-2",
-    "receptId": "",
     "namn": "Hängt gräddfil — steg 2",
     "kategori": "Tillbehör",
     "faser": [
@@ -1320,7 +1279,6 @@
   },
   {
     "id": "mandlar",
-    "receptId": "",
     "namn": "Mandlar",
     "kategori": "Tillbehör",
     "faser": [
@@ -1338,7 +1296,6 @@
   },
   {
     "id": "rostade-jordartskockor",
-    "receptId": "",
     "namn": "Rostade jordärtskockor",
     "kategori": "Tillbehör",
     "faser": [
@@ -1369,7 +1326,6 @@
   },
   {
     "id": "rostade-palsternacka",
-    "receptId": "",
     "namn": "Rostade palsternacka",
     "kategori": "Tillbehör",
     "faser": [
@@ -1409,7 +1365,6 @@
   },
   {
     "id": "rodloksmarmelad",
-    "receptId": "",
     "namn": "Rödlöksmarmelad",
     "kategori": "Tillbehör",
     "faser": [
@@ -1451,7 +1406,6 @@
   },
   {
     "id": "aggskum",
-    "receptId": "",
     "namn": "Äggskum",
     "kategori": "Tillbehör",
     "faser": [

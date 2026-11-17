@@ -10,6 +10,9 @@ export function valideraForberedelse(f: Forberedelse, katalog: Forberedelse[]): 
   const fel: string[] = [];
   const e = sv.valideringsfel;
   if (!f.namn.trim()) fel.push(e.namnSaknas);
+  const sammaNamn = (a: string) => a.trim().toLocaleLowerCase("sv");
+  const dubblett = katalog.find((k) => k.id !== f.id && sammaNamn(k.namn) === sammaNamn(f.namn));
+  if (f.namn.trim() && dubblett) fel.push(e.namnFinns(dubblett.namn));
   if (f.faser.length === 0) fel.push(e.ingaMoment);
 
   f.faser.forEach((x, i) => {

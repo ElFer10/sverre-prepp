@@ -133,6 +133,31 @@ button.liten-knapp.sekundar {
   color: var(--text-svag);
 }
 
+button.fara {
+  background: transparent;
+  border-color: var(--varn);
+  color: var(--varn);
+}
+
+.rubrik-rad.rubrik-rad-knapp {
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+
+.knapp-lank {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--tema);
+  border-radius: 8px;
+  color: var(--tema);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .bred-knapp {
   width: 100%;
   margin-bottom: 12px;

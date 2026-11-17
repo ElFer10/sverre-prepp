@@ -2,6 +2,7 @@
 // En la fase 4 esto se sustituye por Supabase (tablas planner_*), con la misma interfaz.
 
 import { useSyncExternalStore } from "react";
+import { utanForberedelse } from "../katalog/katalog";
 import katalogUtkast from "../scheduler/__fixtures__/katalog.json";
 import {
   STANDARD_INSTALLNINGAR,
@@ -82,6 +83,21 @@ export function tomDag(datum: string): Dagsplan {
 
 export function sparaForberedelse(f: Forberedelse) {
   satt({ ...lager, katalog: lager.katalog.map((k) => (k.id === f.id ? f : k)) });
+}
+
+export function laggTillForberedelse(f: Forberedelse) {
+  satt({ ...lager, katalog: [...lager.katalog, f] });
+}
+
+/** Borra una preparación propia, sus referencias en el catálogo y en los planes abiertos. */
+export function taBortForberedelse(id: string) {
+  const dagar = Object.fromEntries(
+    Object.entries(lager.dagar).map(([d, plan]) => [
+      d,
+      plan.stangd ? plan : { ...plan, poster: plan.poster.filter((p) => p.forberedelseId !== id) },
+    ]),
+  );
+  satt({ ...lager, katalog: utanForberedelse(lager.katalog, id), dagar });
 }
 
 export function aterstallKatalog() {

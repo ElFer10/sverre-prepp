@@ -27,7 +27,8 @@ export interface Fas {
 
 export interface Forberedelse {
   id: string;
-  receptId: string; // id de la grundrecept en la app de recetas
+  /** uuid de la grundrecept en la app de recetas. Sin valor = preparación propia del planner. */
+  receptId?: string;
   namn: string; // caché; la fuente de verdad es la app de recetas
   kategori?: string; // caché, solo para agrupar en la interfaz
   faser: Fas[];
@@ -76,7 +77,7 @@ export const STANDARD_INSTALLNINGAR: Installningar = {
   pacojet: { antal: 1, rengoringMin: 3 },
   avbrottMin: 1,
   iterationer: 500,
-  receptUrlMall: "", // [PENDIENTE] ruta de una receta en la app de recetas
+  receptUrlMall: "https://sverre-recepter.pages.dev/?recept={id}",
 };
 
 // ---------------------------------------------------------------------------
