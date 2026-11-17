@@ -1,7 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { sv } from "../i18n/sv";
 import { KATALOG, kor } from "../scheduler/testhjalp";
-import { efterOppningRader, ganttRader, klockslag, kockRader, kontrollRader, uppslag, varningsText } from "./vy";
+import {
+  efterOppningRader,
+  ganttRader,
+  klockslag,
+  kockRader,
+  kontrollRader,
+  resursRader,
+  ugnHandelser,
+  uppslag,
+  varningsText,
+} from "./vy";
 
 describe("klockslag", () => {
   it("convierte minutos del plan en hora", () => {
@@ -22,7 +32,7 @@ describe("kockRader", () => {
     const skala = rader.find((r) => r.text.startsWith("Skala och tärna"))!;
     expect(skala.forberedelse).toBe("Rotsellerikräm");
     const ugn = res.faser.find((f) => f.fasId === "rotsellerikram-2")!;
-    expect(skala.detaljer).toContain(sv.rad.sedan("Ugn", klockslag(ugn.slut, "14:00")));
+    expect(skala.detaljer).toContain(sv.rad.sedan("ugn", klockslag(ugn.slut, "14:00")));
   });
 
   it("muestra las intervenciones de tillsyn y la limpieza", () => {
@@ -68,5 +78,39 @@ describe("ganttRader", () => {
         for (const b of r.staplar)
           if (a !== b && a.bana === b.bana) expect(a.slut <= b.start || b.slut <= a.start).toBe(true);
     }
+  });
+});
+
+describe("ugnHandelser", () => {
+  it("da la secuencia del horno: precalentar, entrar, salir, cambiar", () => {
+    const res = kor(["svartrot", "gulbetor"]);
+    const h = ugnHandelser(res, KATALOG, "14:00");
+    const textos = h.map((x) => x.text);
+    expect(textos[0]).toMatch(/^Förvärm /);
+    expect(textos.filter((t) => t.startsWith("Byt inställning"))).toHaveLength(1);
+    expect(textos).toContain(sv.pdf.in("Gulbetor", 1));
+    expect(textos).toContain(sv.pdf.ut("Svartrot"));
+    // Orden cronológico, y la salida antes del cambio de configuración
+    expect(h.map((x) => x.tid)).toEqual([...h.map((x) => x.tid)].sort((a, b) => a - b));
+    const ut = textos.findIndex((t) => t.startsWith("Ut:"));
+    const byt = textos.findIndex((t) => t.startsWith("Byt"));
+    expect(ut).toBeLessThan(byt);
+  });
+
+  it("dice qué se usa en spisplatta y avisa de las interrupciones", () => {
+    const res = kor(["vinagersky", "smorsas", "inlagd-fankal"]);
+    const a = res.avbrott[0];
+    const rader = resursRader(res, KATALOG, "spisplatta", a.enhet, "14:00");
+    const salsa = rader.find((r) => r.forberedelseId === a.forberedelseId && r.detaljer.length > 0)!;
+    expect(salsa.detaljer[0]).toBe(
+      `${klockslag(a.start, "14:00")}–${klockslag(a.slut, "14:00")} ${sv.pdf.avbrott("Inlagd fänkål")}`,
+    );
+    expect(rader.some((r) => r.forberedelseId === "inlagd-fankal")).toBe(true);
+  });
+
+  it("incluye la limpieza en la Thermomix", () => {
+    const res = kor(["karljohanmajonnas", "misomajonnas"]);
+    const rader = resursRader(res, KATALOG, "thermomix", 0, "14:00");
+    expect(rader.map((r) => r.slag)).toEqual(["fas", "rengoring", "fas"]);
   });
 });

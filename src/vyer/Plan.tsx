@@ -15,6 +15,8 @@ export function Plan() {
   const [lage, setLage] = useState<"lista" | "gantt">("lista");
   const [valdKock, setValdKock] = useState(1);
   const { planera, planerar } = usePlanera();
+  const [skaparPdf, setSkaparPdf] = useState(false);
+  const [pdfFel, setPdfFel] = useState(false);
   const u = useMemo(() => uppslag(katalog), [katalog]);
 
   if (!dag || !res) {
@@ -38,6 +40,21 @@ export function Plan() {
   const kontroll = kontrollRader(res, u);
   const efter = efterOppningRader(res, katalog, start);
 
+  const pdf = async () => {
+    setSkaparPdf(true);
+    setPdfFel(false);
+    try {
+      // react-pdf solo se descarga cuando hace falta
+      const { laddaNerPdf } = await import("../pdf/laddaNerPdf");
+      await laddaNerPdf(res, katalog, installningar, dag.datum);
+    } catch (e) {
+      console.error(e);
+      setPdfFel(true);
+    } finally {
+      setSkaparPdf(false);
+    }
+  };
+
   return (
     <div className="sida sida-bred">
       <h1>{datumText(dag.datum)}</h1>
@@ -53,10 +70,11 @@ export function Plan() {
         <button className="primar" disabled={planerar} onClick={() => planera(dag)}>
           {planerar ? sv.idag.planerar : sv.plan.planeraOm}
         </button>
-        <button disabled title={sv.plan.pdfSnart}>
-          {sv.plan.laddaNerPdf}
+        <button className="sekundar" disabled={skaparPdf} onClick={pdf}>
+          {skaparPdf ? sv.pdf.skapar : sv.plan.laddaNerPdf}
         </button>
       </div>
+      {pdfFel && <p className="fel">{sv.pdf.fel}</p>}
 
       {res.varningar.length > 0 && (
         <section className="kort varningar">

@@ -110,7 +110,6 @@ export const sv = {
     inaktuell: "Listan har ändrats sedan planen gjordes.",
     planeraOm: "Planera om",
     laddaNerPdf: "Ladda ner PDF",
-    pdfSnart: "PDF kommer i nästa version",
     kockarFonster: (kockar: number, start: string, slut: string) =>
       `${kockar === 1 ? "1 kock" : `${kockar} kockar`} · ${start}–${slut}`,
     varningar: "Varningar",
@@ -176,11 +175,30 @@ export const sv = {
     rengor: (maskin: string) => `Rengör ${maskin}`,
     flyttaAv: (platta: number) => `Flytta av från platta ${platta}`,
     flyttaPa: (platta: number) => `Sätt tillbaka på platta ${platta}`,
-    sedan: (resurs: string, tid: string) => `→ ${resurs.toLowerCase()} till ${tid}`,
+    sedan: (resurs: Resurs, tid: string) =>
+      `→ ${({ ugn: "i ugnen", spisplatta: "på plattan", thermomix: "i Thermomix", pacojet: "i Pacojet" } as const)[resurs]} till ${tid}`,
     sedanVanta: (tid: string) => `→ vänta till ${tid}`,
     kontrolleraEfter: (min: number) => `Kontrollera efter ${min} min`,
     pausad: "pausas för tillsyn",
     avbruten: (n: number) => (n === 1 ? "flyttas av plattan 1 gång" : `flyttas av plattan ${n} gånger`),
+  },
+
+  pdf: {
+    titel: (datum: string) => `Mise en place ${datum}`,
+    filnamn: (datum: string) => `mise-en-place-${datum}.pdf`,
+    skapar: "Skapar PDF…",
+    fel: "Kunde inte skapa PDF:en.",
+    sida: (n: number, av: number) => `Sida ${n} av ${av}`,
+    ugn: "Ugn",
+    spisplattor: "Spisplattor",
+    platta: (n: number) => `Platta ${n}`,
+    thermomix: "Thermomix",
+    pacojet: "Pacojet",
+    anvandsInte: "Används inte.",
+    klar: (tid: string) => `klar ${tid}`,
+    in: (namn: string, bleck: number) => `In: ${namn} (${bleck} bleck)`,
+    ut: (namn: string) => `Ut: ${namn}`,
+    avbrott: (namn: string) => `Av plattan för ${namn}`,
   },
 
   gantt: {

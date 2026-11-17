@@ -93,7 +93,7 @@ function fasDetaljer(f: PlaneradFas, res: PlanResultat, u: Uppslag, start: strin
   if (nasta && nasta.typ !== "aktiv") {
     const nf = u.fas(nasta.fasId)!.fas;
     const hasta = klockslag(nasta.slut, start);
-    d.push(nf.resurs ? sv.rad.sedan(sv.resurs[nf.resurs], hasta) : sv.rad.sedanVanta(hasta));
+    d.push(nf.resurs ? sv.rad.sedan(nf.resurs, hasta) : sv.rad.sedanVanta(hasta));
     if (nf.maxMinuter !== undefined) d.push(sv.rad.kontrolleraEfter(nf.minuter));
   }
   return d;
@@ -260,4 +260,59 @@ export function ganttRader(res: PlanResultat, katalog: Forberedelse[], plattor: 
 /** Último minuto con algo planificado (para la escala del Gantt). */
 export function sistaMinut(res: PlanResultat): number {
   return Math.max(res.oppning, ...res.faser.map((f) => f.slut), ...res.ingrepp.map((g) => g.slut));
+}
+
+// ---------------------------------------------------------------------------
+// Recursos (PDF): línea de tiempo del horno y ocupación de hornillas y máquinas
+
+export interface Handelse {
+  tid: number;
+  text: string;
+}
+
+/** "14:00 Förvärm varmluft 180 °C (klar 14:10)", "14:10 In: Rotsellerikräm (2 bleck)", "14:40 Ut: …". */
+export function ugnHandelser(res: PlanResultat, katalog: Forberedelse[], start: string): Handelse[] {
+  const u = uppslag(katalog);
+  const h: Array<Handelse & { prio: number }> = [];
+  for (const b of res.ugn) {
+    const inst = b.forvarmning ? sv.rad.forvarm(sv.lage[b.lage], b.temp) : sv.rad.byt(sv.lage[b.lage], b.temp);
+    h.push({ tid: b.start, prio: 1, text: `${inst} (${sv.pdf.klar(klockslag(b.klar, start))})` });
+  }
+  for (const f of res.faser.filter((x) => x.resurs === "ugn")) {
+    const bleck = u.fas(f.fasId)?.fas.ugn?.bleck ?? 1;
+    const namn = u.namn(f.forberedelseId);
+    h.push({ tid: f.start, prio: 2, text: sv.pdf.in(namn, bleck) });
+    h.push({ tid: f.slut, prio: 0, text: sv.pdf.ut(namn) });
+  }
+  // A la misma hora: primero sale, luego se cambia, luego entra
+  return h.sort((a, b) => a.tid - b.tid || a.prio - b.prio || a.text.localeCompare(b.text, "sv")).map(({ tid, text }) => ({ tid, text }));
+}
+
+/** Ocupación de una hornilla, Thermomix o Pacojet, con interrupciones y limpiezas. */
+export function resursRader(
+  res: PlanResultat,
+  katalog: Forberedelse[],
+  resurs: "spisplatta" | "thermomix" | "pacojet",
+  enhet: number,
+  start: string,
+): Rad[] {
+  const u = uppslag(katalog);
+  const tid = (m: number) => klockslag(m, start);
+  const rader: Rad[] = res.faser
+    .filter((f) => f.resurs === resurs && f.enhet === enhet)
+    .map((f) => ({
+      start: f.start,
+      slut: f.slut,
+      text: u.fas(f.fasId)?.fas.namn ?? f.fasId,
+      forberedelseId: f.forberedelseId,
+      forberedelse: u.namn(f.forberedelseId),
+      slag: "fas" as const,
+      detaljer: res.avbrott
+        .filter((a) => a.fasId === f.fasId)
+        .map((a) => `${tid(a.start)}–${tid(a.slut)} ${sv.pdf.avbrott(u.namn(a.avForberedelseId))}`),
+    }));
+  for (const g of res.ingrepp.filter((x) => x.typ === "rengoring" && x.resurs === resurs && x.enhet === enhet)) {
+    rader.push(ingreppRad(g, res, u));
+  }
+  return rader.sort(ordna);
 }
