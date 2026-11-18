@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { laggTillForberedelse, sparaForberedelse, taBortForberedelse, useLager } from "../data/lager";
 import { medId, nyttForberedelseId } from "../katalog/katalog";
@@ -110,12 +111,12 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
 
   return (
     <div className="sida">
-      <div className="rubrik-rad">
-        <button className="ikon" aria-label={sv.allmant.tillbaka} onClick={tillbaka}>
-          ‹
-        </button>
-        <h1>{ny ? sv.redigera.nyRubrik : sv.redigera.rubrik}</h1>
-      </div>
+      <button className="tillbaka" onClick={tillbaka}>
+        <ArrowLeft size={18} aria-hidden />
+        {sv.allmant.tillbaka}
+      </button>
+      <p className="overline">{sv.katalog.rubrik}</p>
+      <h1>{ny ? sv.redigera.nyRubrik : sv.redigera.rubrik}</h1>
       {!kanAndra && <p className="liten">{sv.konto.lasLage}</p>}
 
       {/* Kock y Service ven la configuración pero no la cambian */}

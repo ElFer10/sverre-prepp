@@ -4,6 +4,10 @@ import type { Flaskhals, Fas, IngreppTyp, Resurs, UgnLage } from "../scheduler/t
 
 export const sv = {
   appNamn: "Mise en place",
+  /** Línea pequeña sobre el menú y los títulos, como en la app de recetas. */
+  overline: "Kökets mise en place",
+  sidOverline: "Sverre / Köket",
+  logoAlt: "Sverre",
 
   nav: {
     idag: "Idag",

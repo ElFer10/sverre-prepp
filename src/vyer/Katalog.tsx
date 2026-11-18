@@ -1,3 +1,4 @@
+import { ChevronRight, Plus, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { sparaForberedelser, useLager } from "../data/lager";
 import { tidigareLokalKatalog } from "../data/lokaltBackend";
@@ -36,11 +37,13 @@ export function Katalog() {
 
   return (
     <div className="sida">
+      <p className="overline">{sv.sidOverline}</p>
       <div className="rubrik-rad rubrik-rad-knapp">
         <h1>{sv.katalog.rubrik}</h1>
         {kanAndra && (
-          <a className="knapp-lank" href="#/ny-forberedelse">
-            + {sv.katalog.ny}
+          <a className="knapp-lank primar" href="#/ny-forberedelse">
+            <Plus size={18} aria-hidden />
+            {sv.katalog.ny}
           </a>
         )}
       </div>
@@ -55,13 +58,16 @@ export function Katalog() {
         </div>
       )}
 
-      <input
-        type="search"
-        placeholder={sv.katalog.sokPlatshallare}
-        aria-label={sv.allmant.sok}
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-      />
+      <div className="sokfalt">
+        <Search size={18} aria-hidden />
+        <input
+          type="search"
+          placeholder={sv.katalog.sokPlatshallare}
+          aria-label={sv.allmant.sok}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+      </div>
       {grupper.length === 0 && katalog.length > 0 && <p className="tom">{sv.katalog.ingaTraffar}</p>}
       {grupper.map(([kategori, lista]) => (
         <section key={kategori} className="kort">
@@ -79,9 +85,7 @@ export function Katalog() {
                     </span>
                     <span className="markor varn">{sv.katalog.ejKonfigurerad}</span>
                     {kanAndra && (
-                      <span className="pil" aria-hidden>
-                        ›
-                      </span>
+                      <ChevronRight className="pil" size={18} aria-hidden />
                     )}
                   </a>
                 </li>
@@ -116,9 +120,7 @@ function ForbRad(props: { f: Forberedelse; lage: ReturnType<typeof kopplingsLage
         )}
         {!f.aktiv && <span className="markor">{sv.katalog.inaktiv}</span>}
         <span className={`markor ${konf ? "ok" : "varn"}`}>{konf ? sv.katalog.konfigurerad : sv.katalog.ejKonfigurerad}</span>
-        <span className="pil" aria-hidden>
-          ›
-        </span>
+        <ChevronRight className="pil" size={18} aria-hidden />
       </a>
     </li>
   );

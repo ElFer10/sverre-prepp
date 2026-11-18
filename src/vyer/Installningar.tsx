@@ -26,6 +26,7 @@ export function Installningar() {
 
   return (
     <div className="sida">
+      <p className="overline">{sv.sidOverline}</p>
       <h1>{sv.installningar.rubrik}</h1>
 
       <section className="kort">

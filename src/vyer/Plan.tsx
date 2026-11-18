@@ -22,6 +22,7 @@ export function Plan() {
   if (!dag || !res) {
     return (
       <div className="sida">
+        <p className="overline">{sv.sidOverline}</p>
         <h1>{sv.plan.rubrik}</h1>
         <p className="tom">
           <a href="#/idag">{sv.plan.ingenPlan}</a>
@@ -62,6 +63,7 @@ export function Plan() {
 
   return (
     <div className="sida sida-bred">
+      <p className="overline">{sv.nav.plan}</p>
       <h1>{datumText(dag.datum)}</h1>
       <p className="underrubrik">{sv.plan.kockarFonster(res.kockar, start, oppning)}</p>
 

@@ -1,3 +1,4 @@
+import { Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { andraDag, gjordesDet, idagDatum, oppnaDag, tomDag, useLager } from "../data/lager";
 import { sv } from "../i18n/sv";
@@ -51,6 +52,7 @@ export function Idag() {
 
   return (
     <div className="sida">
+      <p className="overline">{sv.nav.idag}</p>
       <h1>{datumText(datum)}</h1>
       {!kanAndra && <p className="liten">{sv.konto.lasLage}</p>}
       {dag.stangd && <p className="banner">{sv.idag.dagenStangd}</p>}
@@ -169,14 +171,17 @@ function Sok(props: {
       <label className="etikett" htmlFor="idag-sok">
         {sv.idag.laggTill}
       </label>
-      <input
-        id="idag-sok"
-        type="search"
-        placeholder={sv.idag.sokPlatshallare}
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        autoComplete="off"
-      />
+      <div className="sokfalt">
+        <Search size={18} aria-hidden />
+        <input
+          id="idag-sok"
+          type="search"
+          placeholder={sv.idag.sokPlatshallare}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          autoComplete="off"
+        />
+      </div>
       {traffar.length > 0 && (
         <ul className="traffar">
           {traffar.map((f) => {

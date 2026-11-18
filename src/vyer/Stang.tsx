@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import { useMemo, useState } from "react";
 import { idagDatum, stangDag, useLager } from "../data/lager";
 import { forslagStatus, stangDag as forhandsvisa, type Status } from "../dag/dagar";
@@ -29,8 +30,12 @@ export function Stang() {
 
   return (
     <div className="sida">
+      <a className="tillbaka" href="#/idag">
+        <ArrowLeft size={18} aria-hidden />
+        {sv.allmant.tillbaka}
+      </a>
+      <p className="overline">{datumText(datum)}</p>
       <h1>{sv.stang.rubrik}</h1>
-      <p className="underrubrik">{datumText(datum)}</p>
       <p className="liten">{sv.stang.forklaring}</p>
 
       {(["maste", "om-tid"] as const).map((prio) => {

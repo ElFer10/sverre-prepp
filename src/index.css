@@ -1,24 +1,30 @@
-/* Mobile-first. Color de tema coherente con la app de recetas (#455e49). */
+/* Mobile-first. Mismo estilo visual que la app de recetas (sverre-recepter/src/style.css):
+   DM Sans + Libre Caslon Display en los títulos, fondo crema, verde #455e49, tarjetas blancas. */
 :root {
   --tema: #455e49;
-  --tema-mork: #34483a;
-  --tema-ljus: #e6ece6;
-  --text: #1d211e;
-  --text-svag: #5b625c;
-  --bakgrund: #f5f6f3;
+  --tema-mork: #354b38;
+  --tema-ljus: #edf0e7;
+  --tema-kant: #adbd9c;
+  --text: #293b32;
+  --text-knapp: #3d4f43;
+  --text-svag: #758172;
+  --overline: #7d8876;
+  --bakgrund: #f7f8f5;
   --yta: #ffffff;
-  --kant: #d9ddd6;
-  --varn: #9a3b12;
-  --varn-bg: #fbeee6;
-  --ok: #2f6a3a;
-  --radie: 10px;
-  --flikar-hojd: 60px;
+  --yta-svag: #fafbf7;
+  --kant: #dce0d6;
+  --kant-svag: #e2e5db;
+  --varn: #8a3b28;
+  --varn-bg: #fae8df;
+  --ok: #42583d;
+  --radie: 13px;
 
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: 16px;
-  line-height: 1.4;
+  font-family: "DM Sans Variable", "DM Sans", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
   color: var(--text);
   background: var(--bakgrund);
+  font-synthesis: none;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -32,17 +38,32 @@ body {
 }
 
 h1 {
-  font-size: 1.4rem;
-  margin: 0 0 12px;
+  font-family: "Libre Caslon Display", Georgia, serif;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin: 4px 0 14px;
 }
 
 h2 {
-  font-size: 1.05rem;
-  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.overline {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--overline);
 }
 
 a {
   color: var(--tema);
+  text-underline-offset: 4px;
 }
 
 button,
@@ -58,35 +79,48 @@ select,
 textarea {
   width: 100%;
   min-height: 44px;
-  padding: 8px 12px;
-  border: 1px solid var(--kant);
+  padding: 11px 12px;
+  border: 1px solid #d8ddcf;
   border-radius: 8px;
   background: var(--yta);
+  color: var(--text);
 }
 
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--tema);
-  outline-offset: 2px;
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--tema-kant);
+  outline-offset: 3px;
 }
 
 input[type="checkbox"] {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--tema);
   flex: none;
 }
 
 button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: 44px;
-  padding: 8px 16px;
+  padding: 10px 14px;
   border: 1px solid var(--kant);
-  border-radius: 8px;
+  border-radius: 9px;
   background: var(--yta);
+  color: var(--text-knapp);
+  font-weight: 550;
   cursor: pointer;
+}
+
+button:not(:disabled):hover {
+  border-color: #88967d;
+  background: var(--yta-svag);
 }
 
 button:disabled {
@@ -94,21 +128,23 @@ button:disabled {
   cursor: default;
 }
 
-button.primar {
+button.primar,
+.knapp-lank.primar {
   background: var(--tema);
   border-color: var(--tema);
   color: #fff;
-  font-weight: 600;
 }
 
-button.primar:not(:disabled):active {
+button.primar:not(:disabled):hover,
+.knapp-lank.primar:hover {
   background: var(--tema-mork);
+  border-color: var(--tema-mork);
+  color: #fff;
 }
 
+/* Secundario = botón normal de la app de recetas (blanco con borde suave) */
 button.sekundar {
-  background: transparent;
-  border-color: var(--tema);
-  color: var(--tema);
+  background: var(--yta);
 }
 
 button.ikon {
@@ -121,22 +157,41 @@ button.ikon {
 
 button.liten-knapp {
   min-height: 36px;
-  padding: 4px 10px;
-  font-size: 0.85rem;
-  border-color: var(--tema);
-  color: var(--tema);
-  background: var(--yta);
+  padding: 5px 11px;
+  font-size: 13px;
 }
 
 button.liten-knapp.sekundar {
-  border-color: var(--kant);
   color: var(--text-svag);
 }
 
 button.fara {
+  color: #b3443d;
+  border-color: #e6bdb7;
+}
+
+button.fara:not(:disabled):hover {
+  background: #fff1ed;
+  border-color: #e6bdb7;
+}
+
+.tillbaka {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-bottom: 12px;
+  padding: 0;
+  border: 0;
   background: transparent;
-  border-color: var(--varn);
-  color: var(--varn);
+  color: var(--text-knapp);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+button.tillbaka:not(:disabled):hover {
+  background: transparent;
+  color: var(--tema-mork);
 }
 
 .rubrik-rad.rubrik-rad-knapp {
@@ -148,14 +203,21 @@ button.fara {
 .knapp-lank {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: 44px;
-  padding: 8px 14px;
-  border: 1px solid var(--tema);
-  border-radius: 8px;
-  color: var(--tema);
+  padding: 10px 14px;
+  border: 1px solid var(--kant);
+  border-radius: 9px;
+  background: var(--yta);
+  color: var(--text-knapp);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 550;
   white-space: nowrap;
+}
+
+.knapp-lank:hover {
+  border-color: #88967d;
 }
 
 .bred-knapp {
@@ -163,72 +225,108 @@ button.fara {
   margin-bottom: 12px;
 }
 
-/* --- Armazón ------------------------------------------------------------ */
+/* --- Armazón: como la app de recetas (menú arriba en el teléfono, lateral en pantalla ancha) --- */
 
-.app {
-  min-height: 100vh;
-  padding-bottom: calc(var(--flikar-hojd) + env(safe-area-inset-bottom));
+.sidomeny {
+  padding: calc(15px + env(safe-area-inset-top)) 15px 10px;
+  background: var(--yta);
+  border-bottom: 1px solid var(--kant-svag);
 }
 
-.topp {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 12px 16px;
-  background: var(--tema);
-  color: #fff;
+.logo {
+  display: block;
+  width: 110px;
+  height: auto;
 }
 
-.topp-namn {
-  font-weight: 700;
-}
-
-.flikar a {
-  text-decoration: none;
-}
-
-.flikar-topp {
+.sidomeny > .overline,
+.sidomeny-botten {
   display: none;
 }
 
-.flikar-botten {
-  position: fixed;
-  inset: auto 0 0 0;
+.flikar {
   display: flex;
-  height: calc(var(--flikar-hojd) + env(safe-area-inset-bottom));
-  padding-bottom: env(safe-area-inset-bottom);
-  background: var(--yta);
-  border-top: 1px solid var(--kant);
-  z-index: 10;
-}
-
-.flikar-botten a {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
   gap: 2px;
-  color: var(--text-svag);
-  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
-.flikar-botten a.aktiv {
-  color: var(--tema);
+.flikar a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 40px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  color: var(--text-knapp);
+  text-decoration: none;
   font-weight: 600;
+  font-size: 13px;
 }
 
-.flik-ikon {
-  font-size: 1.2rem;
+.flikar a svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+.flikar a.aktiv {
+  background: var(--tema-ljus);
+  color: var(--ok);
 }
 
 .innehall {
-  padding: 16px;
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+}
+
+.spar-notis {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 16px;
+  z-index: 100;
+  padding: 10px 12px;
+  border: 1px solid #89977f;
+  border-radius: 8px;
+  background: var(--tema-ljus);
+  font-size: 13px;
+}
+
+.notis {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1400px;
+  margin: 0 auto 20px;
+  padding: 14px 16px;
+  border-radius: 9px;
+  background: var(--varn-bg);
+  color: var(--varn);
+}
+
+.notis.ny-version {
+  background: var(--tema-ljus);
+  color: var(--ok);
 }
 
 .sida {
-  max-width: 640px;
-  margin: 0 auto;
+  max-width: 680px;
+}
+
+.sokfalt {
+  position: relative;
+}
+
+.sokfalt svg {
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  color: #788571;
+  pointer-events: none;
+}
+
+.sokfalt input {
+  padding-left: 40px;
 }
 
 .sida-bred {
@@ -236,7 +334,7 @@ button.fara {
 }
 
 .underrubrik {
-  margin: -8px 0 12px;
+  margin: -6px 0 16px;
   color: var(--text-svag);
 }
 
@@ -244,7 +342,6 @@ button.fara {
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-left: -12px;
 }
 
 .rubrik-rad h1 {
@@ -261,8 +358,9 @@ button.fara {
   background: var(--yta);
   border: 1px solid var(--kant);
   border-radius: var(--radie);
-  padding: 12px 14px;
-  margin: 12px 0;
+  padding: 18px 20px;
+  margin: 16px 0;
+  box-shadow: 0 3px 10px #344c3504;
 }
 
 .tom {
@@ -306,7 +404,7 @@ button.fara {
 
 .segment {
   display: inline-flex;
-  border: 1px solid var(--tema);
+  border: 1px solid var(--kant);
   border-radius: 8px;
   overflow: hidden;
   margin: 4px 0;
@@ -316,11 +414,10 @@ button.fara {
   border: none;
   border-radius: 0;
   min-width: 56px;
-  color: var(--tema);
 }
 
 .segment button + button {
-  border-left: 1px solid var(--tema);
+  border-left: 1px solid var(--kant);
 }
 
 .segment button.vald {
@@ -360,7 +457,7 @@ button.fara {
 
 .atgard-rad {
   position: sticky;
-  bottom: calc(var(--flikar-hojd) + env(safe-area-inset-bottom) + 8px);
+  bottom: calc(8px + env(safe-area-inset-bottom));
   justify-content: flex-end;
   padding: 8px 0;
 }
@@ -451,9 +548,10 @@ button.fara {
 
 .markor {
   flex: none;
-  font-size: 0.75rem;
-  padding: 2px 8px;
-  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
   background: var(--tema-ljus);
   color: var(--text-svag);
 }
@@ -713,34 +811,70 @@ button.fara {
 /* --- Pantallas anchas ---------------------------------------------------------- */
 
 @media (min-width: 900px) {
-  .app {
-    padding-bottom: 0;
+  .skal {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    min-height: 100vh;
   }
 
-  .flikar-botten {
-    display: none;
-  }
-
-  .flikar-topp {
+  .sidomeny {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    padding: 35px 22px;
+    border-bottom: 0;
+    border-right: 1px solid #e2e4da;
   }
 
-  .flikar-topp a {
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 8px;
-    opacity: 0.85;
+  .logo {
+    width: 175px;
+    margin-bottom: 45px;
   }
 
-  .flikar-topp a.aktiv {
-    background: rgb(255 255 255 / 18%);
-    opacity: 1;
-    font-weight: 600;
+  .sidomeny > .overline {
+    display: block;
+  }
+
+  .flikar {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 9px;
+    margin-top: 15px;
+  }
+
+  .flikar a {
+    gap: 8px;
+    padding: 15px;
+    font-size: 15px;
+  }
+
+  .flikar a svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .sidomeny-botten {
+    display: grid;
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 60px;
+  }
+
+  .sidomeny-botten small {
+    font-size: 12px;
+    color: var(--text-svag);
+    overflow-wrap: anywhere;
   }
 
   .innehall {
-    padding: 24px;
+    padding: 44px 48px;
+    min-width: 0;
+  }
+
+  h1 {
+    font-size: 44px;
   }
 
   .kock-kolumner {
@@ -759,36 +893,34 @@ button.fara {
 
 /* --- Fase 4: sesión, guardado, enlace, solo lectura --------------------------- */
 
-.mitt {
-  min-height: 100vh;
+/* Inicio de sesión, carga y error: como .login-panel de la app de recetas */
+.inloggning {
+  max-width: 520px;
+  margin: 8vh auto;
+  padding: 32px;
+}
+
+.inloggning .logo {
+  width: 110px;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 900px) {
+  .inloggning .logo {
+    width: 175px;
+  }
+}
+
+.inloggning form {
+  display: grid;
+  gap: 20px;
+}
+
+.inloggning label {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  text-align: center;
-}
-
-.inloggning {
-  width: 100%;
-  max-width: 380px;
-  text-align: left;
-}
-
-.topp-status {
-  margin-left: auto;
-  font-size: 0.85rem;
-  opacity: 0.85;
-}
-
-.sparfel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--varn-bg);
-  color: var(--varn);
+  gap: 8px;
+  font-size: 14px;
 }
 
 fieldset.las {
@@ -841,9 +973,4 @@ fieldset.las {
 
 .post-lista .post-text {
   min-width: 8.5em;
-}
-
-.ny-version {
-  background: var(--tema-ljus);
-  color: var(--tema-mork);
 }

@@ -10,6 +10,7 @@ App React para planificar la mise en place diaria del restaurante de Fer. **Leer
 - Esta app **nunca escribe** en las tablas de la app de recetas (grundrecept, maträtter, etc.). Solo lectura. Las tablas propias llevan prefijo `planner_`.
 - No guardar recetas aquí: solo datos de tiempo y recursos enlazados por `receptId`.
 - Mobile-first: todo debe usarse cómodamente en el teléfono.
+- Estilo visual igual al de la app de recetas (`sverre-recepter/src/style.css`): DM Sans, títulos en Libre Caslon Display, verde #455e49, fondo #f7f8f5, logo de Sverre, iconos lucide. Es una suite: cualquier cambio visual debe seguir ese estilo.
 - Ante cualquier punto marcado [PENDIENTE] en `SPEC.md`, preguntar a Fer en lugar de suponer.
 - Seguir el orden de desarrollo de `SPEC.md` §13.
 

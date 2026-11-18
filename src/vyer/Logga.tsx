@@ -9,9 +9,10 @@ export function Logga() {
   const [upptagen, setUpptagen] = useState(false);
 
   return (
-    <div className="mitt">
+    <main className="inloggning">
+      <img className="logo" src="/sverre-logo.png" alt={sv.logoAlt} />
+      <h1>{sv.appNamn}</h1>
       <form
-        className="kort formular inloggning"
         onSubmit={async (e) => {
           e.preventDefault();
           setUpptagen(true);
@@ -20,14 +21,12 @@ export function Logga() {
           setLosenord("");
         }}
       >
-        <h1>{sv.appNamn}</h1>
-        <p className="liten">{sv.konto.forklaring}</p>
         <label>
-          <span className="etikett">{sv.konto.epost}</span>
+          {sv.konto.epost}
           <input type="email" autoComplete="username" required value={epost} onChange={(e) => setEpost(e.target.value)} />
         </label>
         <label>
-          <span className="etikett">{sv.konto.losenord}</span>
+          {sv.konto.losenord}
           <input
             type="password"
             autoComplete="current-password"
@@ -41,10 +40,11 @@ export function Logga() {
             {fel}
           </p>
         )}
-        <button className="primar bred-knapp" disabled={upptagen}>
+        <button className="primar" disabled={upptagen}>
           {upptagen ? sv.konto.loggarIn : sv.konto.loggaIn}
         </button>
       </form>
-    </div>
+      <p>{sv.konto.forklaring}</p>
+    </main>
   );
 }

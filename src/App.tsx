@@ -1,3 +1,4 @@
+import { BookOpen, CalendarClock, ClipboardList, Settings } from "lucide-react";
 import { useEffect } from "react";
 import { forsokIgen, loggaUt, starta, useLager } from "./data/lager";
 import { sv } from "./i18n/sv";
@@ -12,11 +13,12 @@ import { Plan } from "./vyer/Plan";
 import { Redigera } from "./vyer/Redigera";
 import { Stang } from "./vyer/Stang";
 
+// Mismo menú que la app de recetas: iconos lucide de 19 px junto al texto
 const FLIKAR = [
-  { vy: "idag", hash: "#/idag", text: sv.nav.idag, ikon: "☰" },
-  { vy: "plan", hash: "#/plan", text: sv.nav.plan, ikon: "◷" },
-  { vy: "katalog", hash: "#/katalog", text: sv.nav.katalog, ikon: "▤" },
-  { vy: "installningar", hash: "#/installningar", text: sv.nav.installningar, ikon: "⚙" },
+  { vy: "idag", hash: "#/idag", text: sv.nav.idag, Ikon: ClipboardList },
+  { vy: "plan", hash: "#/plan", text: sv.nav.plan, Ikon: CalendarClock },
+  { vy: "katalog", hash: "#/katalog", text: sv.nav.katalog, Ikon: BookOpen },
+  { vy: "installningar", hash: "#/installningar", text: sv.nav.installningar, Ikon: Settings },
 ] as const;
 
 export default function App() {
@@ -47,65 +49,69 @@ export default function App() {
 
   const aktivFlik = flikFor(rutt);
   return (
-    <div className="app">
-      <header className="topp">
-        <span className="topp-namn">{sv.appNamn}</span>
-        <nav className="flikar flikar-topp">
-          {FLIKAR.map((f) => (
-            <a key={f.vy} href={f.hash} className={f.vy === aktivFlik ? "aktiv" : ""}>
-              {f.text}
-            </a>
-          ))}
-        </nav>
-        <span className="topp-status" aria-live="polite">
-          {lager.sparar > 0 ? sv.sparar.sparar : ""}
-        </span>
-      </header>
-      {nyVersion && (
-        <div className="sparfel ny-version" role="status">
-          <span>{sv.pwa.nyVersion}</span>
-          <button className="liten-knapp" onClick={aktiveraNyVersion}>
-            {sv.pwa.uppdatera}
-          </button>
+    <>
+      {lager.sparar > 0 && (
+        <div className="spar-notis" role="status">
+          {sv.sparar.sparar}
         </div>
       )}
-      {lager.offline && (
-        <div className="sparfel" role="status">
-          <span>{sv.pwa.offline(tidText(lager.offline))}</span>
-          <button className="liten-knapp" onClick={() => void starta()}>
-            {sv.konto.forsokIgen}
-          </button>
-        </div>
-      )}
-      {lager.sparfel && (
-        <div className="sparfel" role="alert">
-          <span>{lager.sparfel}</span>
-          <button className="liten-knapp" onClick={forsokIgen}>
-            {sv.konto.forsokIgen}
-          </button>
-        </div>
-      )}
-      <main className="innehall">
-        {rutt.vy === "idag" && <Idag />}
-        {rutt.vy === "plan" && <Plan />}
-        {rutt.vy === "katalog" && <Katalog />}
-        {rutt.vy === "redigera" && <Redigera key={rutt.id} id={rutt.id} />}
-        {rutt.vy === "ny" && <Redigera key={`ny-${rutt.receptId ?? ""}`} id={null} receptId={rutt.receptId} />}
-        {rutt.vy === "koppla" && <Koppla />}
-        {rutt.vy === "stang" && <Stang />}
-        {rutt.vy === "installningar" && <Installningar />}
-      </main>
-      <nav className="flikar flikar-botten">
-        {FLIKAR.map((f) => (
-          <a key={f.vy} href={f.hash} className={f.vy === aktivFlik ? "aktiv" : ""}>
-            <span className="flik-ikon" aria-hidden>
-              {f.ikon}
-            </span>
-            {f.text}
-          </a>
-        ))}
-      </nav>
-    </div>
+      <div className="skal">
+        <aside className="sidomeny">
+          <img className="logo" src="/sverre-logo.png" alt={sv.logoAlt} />
+          <p className="overline">{sv.overline}</p>
+          <nav className="flikar">
+            {FLIKAR.map(({ vy, hash, text, Ikon }) => (
+              <a key={vy} href={hash} className={vy === aktivFlik ? "aktiv" : ""} aria-current={vy === aktivFlik ? "page" : undefined}>
+                <Ikon size={19} aria-hidden />
+                {text}
+              </a>
+            ))}
+          </nav>
+          <div className="sidomeny-botten">
+            {lager.anvandare && (
+              <small>
+                {lager.anvandare.epost} · {lager.anvandare.roll}
+              </small>
+            )}
+            <button onClick={() => void loggaUt()}>{sv.konto.loggaUt}</button>
+          </div>
+        </aside>
+        <main className="innehall">
+          {nyVersion && (
+            <div className="notis ny-version" role="status">
+              <span>{sv.pwa.nyVersion}</span>
+              <button className="primar liten-knapp" onClick={aktiveraNyVersion}>
+                {sv.pwa.uppdatera}
+              </button>
+            </div>
+          )}
+          {lager.offline && (
+            <div className="notis" role="status">
+              <span>{sv.pwa.offline(tidText(lager.offline))}</span>
+              <button className="liten-knapp" onClick={() => void starta()}>
+                {sv.konto.forsokIgen}
+              </button>
+            </div>
+          )}
+          {lager.sparfel && (
+            <div className="notis" role="alert">
+              <span>{lager.sparfel}</span>
+              <button className="liten-knapp" onClick={forsokIgen}>
+                {sv.konto.forsokIgen}
+              </button>
+            </div>
+          )}
+          {rutt.vy === "idag" && <Idag />}
+          {rutt.vy === "plan" && <Plan />}
+          {rutt.vy === "katalog" && <Katalog />}
+          {rutt.vy === "redigera" && <Redigera key={rutt.id} id={rutt.id} />}
+          {rutt.vy === "ny" && <Redigera key={`ny-${rutt.receptId ?? ""}`} id={null} receptId={rutt.receptId} />}
+          {rutt.vy === "koppla" && <Koppla />}
+          {rutt.vy === "stang" && <Stang />}
+          {rutt.vy === "installningar" && <Installningar />}
+        </main>
+      </div>
+    </>
   );
 }
 
@@ -117,5 +123,10 @@ function tidText(iso: string): string {
 }
 
 function Mitt(props: { children: React.ReactNode }) {
-  return <div className="mitt">{props.children}</div>;
+  return (
+    <main className="inloggning">
+      <img className="logo" src="/sverre-logo.png" alt={sv.logoAlt} />
+      {props.children}
+    </main>
+  );
 }

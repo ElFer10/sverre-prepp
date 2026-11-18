@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import { useMemo, useState } from "react";
 import { sparaForberedelser, useLager } from "../data/lager";
 import { sv } from "../i18n/sv";
@@ -39,12 +40,12 @@ export function Koppla() {
 
   return (
     <div className="sida">
-      <div className="rubrik-rad">
-        <button className="ikon" aria-label={sv.allmant.tillbaka} onClick={() => ga("#/katalog")}>
-          ‹
-        </button>
-        <h1>{sv.koppla.rubrik}</h1>
-      </div>
+      <button className="tillbaka" onClick={() => ga("#/katalog")}>
+        <ArrowLeft size={18} aria-hidden />
+        {sv.allmant.tillbaka}
+      </button>
+      <p className="overline">{sv.katalog.rubrik}</p>
+      <h1>{sv.koppla.rubrik}</h1>
       <p className="liten">{sv.koppla.forklaring}</p>
 
       {grundrecept.length === 0 && <p className="tom">{sv.koppla.ingaGrundrecept}</p>}

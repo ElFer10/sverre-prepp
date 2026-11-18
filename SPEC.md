@@ -386,6 +386,7 @@ Usar el catálogo de `KATALOG-UTKAST.md` como fixture.
    - Versión nueva: aviso "En ny version av appen finns" → Uppdatera (no se activa sola a mitad de uso).
    - Sin conexión: copia del último estado (hoy y días siguientes) en el teléfono, en solo lectura; al volver la red se recarga. Se borra al cerrar sesión.
    - Despliegue como la app de recetas: GitHub → Cloudflare Pages, push a `main` despliega (instrucciones en `README.md`).
+   - Estilo visual unificado con la app de recetas (suite Sverre): mismas fuentes (servidas desde la app, funcionan sin conexión), colores, botones, tarjetas, logo y menú (arriba en el teléfono, lateral en pantalla ancha). Icono: "M" serif crema sobre verde, como la "S" de la app de recetas.
 
 ## 14. Decisiones
 
