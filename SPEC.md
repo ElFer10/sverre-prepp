@@ -381,6 +381,11 @@ Usar el catálogo de `KATALOG-UTKAST.md` como fixture.
    - Enlace con grundrecept en Katalog → "Koppla till grundrecept" (exactas preseleccionadas, el resto lo decide Fer). Las grundrecept sin configurar aparecen en Katalog como "Ej konfigurerad".
    - `npm run dev:lokal` mantiene un modo local (sin Supabase) para desarrollo y pruebas.
 5. **PWA + despliegue** en Cloudflare Pages.
+   - Manifiesto e iconos en `public/`; `vite.config.ts` genera `dist/sw.js` con la lista de ficheros de cada compilación (la app entera, también el PDF y sus fuentes, abre sin conexión).
+   - El service worker solo responde a peticiones del mismo origen: los datos de Supabase nunca se guardan en su caché.
+   - Versión nueva: aviso "En ny version av appen finns" → Uppdatera (no se activa sola a mitad de uso).
+   - Sin conexión: copia del último estado (hoy y días siguientes) en el teléfono, en solo lectura; al volver la red se recarga. Se borra al cerrar sesión.
+   - Despliegue como la app de recetas: GitHub → Cloudflare Pages, push a `main` despliega (instrucciones en `README.md`).
 
 ## 14. Decisiones
 

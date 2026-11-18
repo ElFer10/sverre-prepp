@@ -6,7 +6,7 @@ import type { SparadDag } from "../dag/dagar";
 import { sv } from "../i18n/sv";
 import { lasGrundrecept } from "../katalog/koppling";
 import { STANDARD_INSTALLNINGAR, type Forberedelse, type Installningar } from "../scheduler/types";
-import { VisbartFel, type Anvandare, type Backend, type Roll } from "./backend";
+import { NatverksFel, VisbartFel, arNatverksMeddelande, type Anvandare, type Backend, type Roll } from "./backend";
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./konfig";
 
 /** Días que se cargan hacia atrás (los antiguos no hacen falta para planificar). */
@@ -19,6 +19,7 @@ const client = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
 
 function kontrollera(error: PostgrestError | null) {
   if (!error) return;
+  if (arNatverksMeddelande(error.message)) throw new NatverksFel(sv.fel.natverk);
   // 42P01 / PGRST205: la tabla no existe → falta ejecutar supabase/001_planner.sql
   if (error.code === "42P01" || (error.code === "PGRST205" && /planner_/.test(error.message)) || /planner_\w+.*(does not exist|schema cache)/i.test(error.message)) throw new VisbartFel(sv.fel.plannerSaknas);
   throw new VisbartFel(sv.fel.databas(error.message));
@@ -42,13 +43,16 @@ export const supabaseBackend: Backend = {
   lage: "supabase",
 
   async aktuellAnvandare() {
-    const { data } = await client.auth.getSession();
+    const { data, error } = await client.auth.getSession();
+    // Token caducado y sin red: la sesión sigue guardada, no es "sin sesión"
+    if (error && arNatverksMeddelande(error.message)) throw new NatverksFel(sv.fel.natverk);
     const user = data.session?.user;
     return user ? anvandareFor(user.id, user.email ?? "") : null;
   },
 
   async loggaIn(epost, losenord) {
     const { data, error } = await client.auth.signInWithPassword({ email: epost.trim(), password: losenord });
+    if (error && arNatverksMeddelande(error.message)) throw new NatverksFel(sv.fel.natverk);
     if (error || !data.user) throw new VisbartFel(sv.fel.inloggning);
     return anvandareFor(data.user.id, data.user.email ?? epost);
   },

@@ -20,6 +20,12 @@ export interface Data {
 /** Error con un mensaje en sueco listo para mostrar. */
 export class VisbartFel extends Error {}
 
+/** No hay conexión con el servidor (la app puede seguir con la copia guardada). */
+export class NatverksFel extends VisbartFel {}
+
+/** Mensajes de fetch sin red en Chrome, Safari y Firefox. */
+export const arNatverksMeddelande = (m: string) => /failed to fetch|load failed|networkerror|fetch failed|network request failed/i.test(m);
+
 export interface Backend {
   lage: "supabase" | "lokal";
   /** Sesión guardada; null si hay que iniciar sesión. Lanza VisbartFel si la cuenta no tiene rol. */

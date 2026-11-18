@@ -35,6 +35,14 @@ export const sv = {
     plannerSaknas: "Planerarens tabeller finns inte i databasen än. Kör supabase/001_planner.sql (se supabase/README.md).",
     sparfel: (detalj: string) => `Kunde inte spara: ${detalj}`,
     bara_chef: "Endast Chef kan ändra.",
+    natverk: "Ingen anslutning till servern.",
+  },
+
+  // --- Installerad app ------------------------------------------------------------
+  pwa: {
+    offline: (tid: string) => `Ingen anslutning. Visar data från ${tid}. Ändringar är avstängda tills anslutningen är tillbaka.`,
+    nyVersion: "En ny version av appen finns.",
+    uppdatera: "Uppdatera",
   },
 
   sparar: {

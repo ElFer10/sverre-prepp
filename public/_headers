@@ -1,0 +1,7 @@
+# Cloudflare Pages: el service worker y la página siempre se comprueban; los assets con hash no cambian nunca
+/sw.js
+  Cache-Control: no-cache
+/
+  Cache-Control: no-cache
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

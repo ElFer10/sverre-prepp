@@ -842,3 +842,8 @@ fieldset.las {
 .post-lista .post-text {
   min-width: 8.5em;
 }
+
+.ny-version {
+  background: var(--tema-ljus);
+  color: var(--tema-mork);
+}

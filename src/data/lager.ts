@@ -17,9 +17,10 @@ import { sv } from "../i18n/sv";
 import { synka, type Grundrecept } from "../katalog/koppling";
 import { utanForberedelse } from "../katalog/katalog";
 import { STANDARD_INSTALLNINGAR, type Dagsplan, type Forberedelse, type Installningar, type PlanResultat } from "../scheduler/types";
-import { VisbartFel, type Anvandare, type Backend } from "./backend";
+import { NatverksFel, VisbartFel, arNatverksMeddelande, type Anvandare, type Backend } from "./backend";
 import { DATALAGE } from "./konfig";
 import { lokaltBackend } from "./lokaltBackend";
+import { lasKopia, raderaKopia, sparaKopia } from "./offlineKopia";
 import { supabaseBackend } from "./supabaseBackend";
 
 export interface Lager {
@@ -37,6 +38,8 @@ export interface Lager {
   /** Guardados en curso. */
   sparar: number;
   sparfel?: string;
+  /** Sin conexión: se muestra la copia guardada en esa fecha (ISO) y no se puede cambiar nada. */
+  offline?: string;
 }
 
 const backend: Backend = DATALAGE === "lokal" ? lokaltBackend : supabaseBackend;
@@ -58,6 +61,18 @@ const lyssnare = new Set<() => void>();
 function satt(andring: Partial<Lager>) {
   lager = { ...lager, ...andring };
   for (const l of lyssnare) l();
+  if (backend.lage === "supabase" && lager.status === "klar" && !lager.offline) planeraKopia();
+}
+
+// Copia para ver sin conexión: se reescribe (agrupando cambios seguidos) con cada cambio del estado
+let kopiaTimer: ReturnType<typeof setTimeout> | undefined;
+function planeraKopia() {
+  clearTimeout(kopiaTimer);
+  kopiaTimer = setTimeout(() => {
+    const { anvandare, grundrecept, dagar, installningar, status, offline } = lager;
+    if (!anvandare || status !== "klar" || offline) return;
+    sparaKopia({ tid: new Date().toISOString(), anvandare, katalog: ravKatalog, grundrecept, dagar, installningar }, idagDatum());
+  }, 500);
 }
 
 function sattKatalog(k: Forberedelse[]) {
@@ -122,6 +137,7 @@ async function ladda(anvandare: Anvandare) {
   ravKatalog = data.katalog;
   satt({
     status: "klar",
+    offline: undefined,
     grundrecept,
     katalog: synka(data.katalog, grundrecept),
     dagar: data.dagar,
@@ -129,14 +145,43 @@ async function ladda(anvandare: Anvandare) {
   });
 }
 
+const utanNatverk = (e: unknown) =>
+  e instanceof NatverksFel || (typeof navigator !== "undefined" && navigator.onLine === false) || (e instanceof TypeError && arNatverksMeddelande(e.message));
+
+/** Sin conexión: la última copia, en solo lectura. Devuelve false si no hay copia. */
+function laddaKopia(): boolean {
+  const k = backend.lage === "supabase" ? lasKopia() : null;
+  if (!k) return false;
+  ravKatalog = k.katalog;
+  satt({
+    status: "klar",
+    offline: k.tid,
+    fel: undefined,
+    anvandare: k.anvandare,
+    kanAndra: false,
+    grundrecept: k.grundrecept,
+    katalog: synka(k.katalog, k.grundrecept),
+    dagar: k.dagar,
+    installningar: { ...STANDARD_INSTALLNINGAR, ...k.installningar },
+  });
+  return true;
+}
+
 export async function starta() {
   try {
     const a = await backend.aktuellAnvandare();
-    if (!a) satt({ status: "utloggad" });
-    else await ladda(a);
+    if (a) await ladda(a);
+    else if (!(utanNatverk(null) && laddaKopia())) satt({ status: "utloggad" });
   } catch (e) {
-    satt({ status: "fel", fel: meddelande(e) });
+    if (!(utanNatverk(e) && laddaKopia())) satt({ status: "fel", fel: meddelande(e) });
   }
+}
+
+// Al volver la conexión, recargar del servidor
+if (typeof window !== "undefined") {
+  window.addEventListener("online", () => {
+    if (lager.offline) void starta();
+  });
 }
 
 /** Devuelve el mensaje de error, o null si fue bien. */
@@ -153,17 +198,20 @@ export async function loggaIn(epost: string, losenord: string): Promise<string |
 /** Vuelve a leer todo del servidor (p. ej. para ver el plan que acaba de guardar Chef). */
 export async function uppdatera() {
   if (!lager.anvandare) return starta();
+  if (lager.offline) return starta();
   try {
     await ladda(lager.anvandare);
   } catch (e) {
-    satt({ status: "fel", fel: meddelande(e) });
+    if (!(utanNatverk(e) && laddaKopia())) satt({ status: "fel", fel: meddelande(e) });
   }
 }
 
 export async function loggaUt() {
-  await backend.loggaUt();
+  clearTimeout(kopiaTimer);
+  raderaKopia();
+  await backend.loggaUt().catch(() => undefined);
   ravKatalog = [];
-  satt({ status: "utloggad", anvandare: undefined, kanAndra: false, katalog: [], grundrecept: [], dagar: {}, sparfel: undefined });
+  satt({ status: "utloggad", anvandare: undefined, kanAndra: false, katalog: [], grundrecept: [], dagar: {}, sparfel: undefined, offline: undefined });
 }
 
 // --- Fecha local --------------------------------------------------------------------

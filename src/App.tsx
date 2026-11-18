@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { forsokIgen, loggaUt, starta, useLager } from "./data/lager";
 import { sv } from "./i18n/sv";
 import { flikFor, useRutt } from "./komponenter/useRutt";
+import { aktiveraNyVersion, useNyVersion } from "./pwa";
 import { Idag } from "./vyer/Idag";
 import { Installningar } from "./vyer/Installningar";
 import { Katalog } from "./vyer/Katalog";
@@ -21,6 +22,7 @@ const FLIKAR = [
 export default function App() {
   const lager = useLager();
   const rutt = useRutt();
+  const nyVersion = useNyVersion();
   useEffect(() => {
     void starta();
   }, []);
@@ -59,6 +61,22 @@ export default function App() {
           {lager.sparar > 0 ? sv.sparar.sparar : ""}
         </span>
       </header>
+      {nyVersion && (
+        <div className="sparfel ny-version" role="status">
+          <span>{sv.pwa.nyVersion}</span>
+          <button className="liten-knapp" onClick={aktiveraNyVersion}>
+            {sv.pwa.uppdatera}
+          </button>
+        </div>
+      )}
+      {lager.offline && (
+        <div className="sparfel" role="status">
+          <span>{sv.pwa.offline(tidText(lager.offline))}</span>
+          <button className="liten-knapp" onClick={() => void starta()}>
+            {sv.konto.forsokIgen}
+          </button>
+        </div>
+      )}
       {lager.sparfel && (
         <div className="sparfel" role="alert">
           <span>{lager.sparfel}</span>
@@ -89,6 +107,13 @@ export default function App() {
       </nav>
     </div>
   );
+}
+
+/** "18/11 07:30" en hora local. */
+function tidText(iso: string): string {
+  const d = new Date(iso);
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getDate()}/${d.getMonth() + 1} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 
 function Mitt(props: { children: React.ReactNode }) {
