@@ -120,6 +120,7 @@ Las reducciones (Smörsås, Vinägersky) suelen terminar después de las 16:00. 
 
 Algunas recetas se hacen en dos días: Vispat brynt smör (bryna → enfriar toda la noche → mixar) y Hängt gräddfil (colar toda la noche → llenar mangas). Se modelan como **dos preparaciones enlazadas**: `steg 1` y `steg 2`, con `fortsattning: prepId`.
 - Al cerrar el día con el steg 1 hecho, el steg 2 se añade **automáticamente** a la lista del día siguiente, con la misma prioridad que tenía el steg 1.
+- Grundrecept de la app de recetas que se hacen en dos días: en el editor, **"Dela upp i två dagar"** crea el steg 2 enlazado a la misma receta (`steg: 2`, mismo `receptId`) y los une con `fortsattning`. Los nombres son el de la receta + " · steg 1/2" (se mantienen sincronizados) y los dos tienen "Visa recept". Opcionalmente mueve al steg 2 los momentos desde uno elegido. Lo que dependía de la preparación pasa a depender del steg 2 (el producto terminado). Si se borra el steg 2, el steg 1 vuelve a ser una preparación normal (decidido con Fer, 2026-11-19).
 - Lo mismo sirve para sorbetes y helados (llenar los vasos y congelar hoy; pasarlos por la Pacojet otro día), si Fer quiere que el pacotizado aparezca en el plan. [PENDIENTE]
 
 ### 3.12 Frescura

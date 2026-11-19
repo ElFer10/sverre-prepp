@@ -34,6 +34,8 @@ export interface Forberedelse {
   faser: Fas[];
   beroendeAv: string[]; // dependencias
   fortsattning?: string; // id del steg siguiente (al día siguiente)
+  /** Día dentro de una grundrecept repartida en varios días (1, 2…). Solo se usa para el nombre. */
+  steg?: number;
   farskhet: "normal" | "senast-mojligt";
   kanAvslutasEfterOppning: boolean;
   kontrolleraFore?: string[]; // requisitos previos

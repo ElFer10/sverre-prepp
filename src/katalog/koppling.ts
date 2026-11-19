@@ -1,6 +1,7 @@
 // Enlace entre el catálogo del planner y las grundrecept de la app de recetas (SPEC §7).
 
 import type { Forberedelse } from "../scheduler/types";
+import { stegNamn } from "./katalog";
 
 /** Lo que el planner lee de una receta `type: "prep"` de la app de recetas (solo lectura). */
 export interface Grundrecept {
@@ -12,10 +13,10 @@ export interface Grundrecept {
   steg: string[];
 }
 
-/** Normaliza un nombre para comparar: minúsculas, sin "— steg N", sin signos. */
+/** Normaliza un nombre para comparar: minúsculas, sin "— steg N" / "· steg N", sin signos. */
 export function normalisera(namn: string, utanParentes = false): string {
   let s = namn.normalize("NFC").toLocaleLowerCase("sv");
-  s = s.replace(/\s*[—–-]\s*steg\s*\d+\s*$/u, "");
+  s = s.replace(/\s*[—–\-·]\s*steg\s*\d+\s*$/u, "");
   if (utanParentes) s = s.replace(/\([^)]*\)/g, " ");
   return s
     .replace(/[^\p{L}\p{N}]+/gu, " ")
@@ -69,8 +70,10 @@ export function synka(katalog: Forberedelse[], grundrecept: Grundrecept[]): Forb
   const porId = new Map(grundrecept.map((g) => [g.id, g]));
   return katalog.map((f) => {
     const g = f.receptId ? porId.get(f.receptId) : undefined;
-    if (!g || (g.namn === f.namn && g.kategori === f.kategori)) return f;
-    return { ...f, namn: g.namn, kategori: g.kategori || f.kategori };
+    if (!g) return f;
+    const namn = stegNamn(g.namn, f.steg);
+    if (namn === f.namn && g.kategori === f.kategori) return f;
+    return { ...f, namn, kategori: g.kategori || f.kategori };
   });
 }
 

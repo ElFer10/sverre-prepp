@@ -124,6 +124,12 @@ export const sv = {
     beroendeAv: "Beroende av",
     laggTillBeroende: "Lägg till beroende…",
     foljdsteg: "Följdsteg (nästa dag)",
+    delaUpp: "Dela upp i två dagar",
+    delaUppForklaring:
+      "För recept som görs över två dagar. Skapar steg 2 kopplat till samma recept. När steg 1 är gjort läggs steg 2 automatiskt till nästa dags lista.",
+    dag2BorjarMed: "Dag 2 börjar med",
+    dag2Senare: "Inga moment än (lägg till dem i steg 2)",
+    steg2Info: "Steg 2: läggs automatiskt till dagen efter att steg 1 är gjort.",
     farskhet: "Så sent som möjligt (färskhet)",
     efterOppning: "Kan avslutas efter öppning",
     kontrolleraFore: "Kontrollera före start (en per rad)",

@@ -1,7 +1,8 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CalendarPlus } from "lucide-react";
 import { useState } from "react";
-import { laggTillForberedelse, sparaForberedelse, taBortForberedelse, useLager } from "../data/lager";
-import { medId, nyttForberedelseId } from "../katalog/katalog";
+import { laggTillForberedelse, sparaForberedelse, sparaForberedelser, taBortForberedelse, useLager } from "../data/lager";
+import { delaUpp, medId, nyttForberedelseId, stegNamn } from "../katalog/katalog";
+import { ga } from "../komponenter/useRutt";
 import { sv } from "../i18n/sv";
 import { nyttFasId, stadaFas, valideraForberedelse } from "../katalog/validera";
 import type { Fas, Forberedelse, Resurs, UgnLage } from "../scheduler/types";
@@ -40,6 +41,7 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
     return g ? { ...tomForberedelse(), namn: g.namn, kategori: g.kategori, receptId: g.id } : tomForberedelse();
   });
   const [fel, setFel] = useState<string[]>([]);
+  const [dag2Fran, setDag2Fran] = useState("");
 
   if (!utkast) {
     return (
@@ -65,7 +67,8 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
   const laggTillFas = () =>
     satt({ faser: [...f.faser, { id: nyttFasId(f), namn: "", typ: "aktiv", minuter: 5 }] });
 
-  const spara = () => {
+  /** Borrador limpio y validado; null (y errores a la vista) si no se puede guardar. */
+  const stadat = (): Forberedelse | null => {
     let stadad: Forberedelse = {
       ...f,
       namn: f.namn.trim(),
@@ -81,11 +84,26 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
     setFel(e);
     if (e.length) {
       window.scrollTo(0, 0);
-      return;
+      return null;
     }
+    return stadad;
+  };
+
+  const spara = () => {
+    const stadad = stadat();
+    if (!stadad) return;
     if (ny) laggTillForberedelse(stadad);
     else sparaForberedelse(stadad);
     tillbaka();
+  };
+
+  /** Crea el steg 2 enlazado a la misma receta y abre su editor. */
+  const delaUppIDagar = () => {
+    const stadad = stadat();
+    const r = stadad && delaUpp(stadad, katalog, dag2Fran ? Number(dag2Fran) : undefined);
+    if (!r) return;
+    sparaForberedelser([r.steg1, r.steg2, ...r.andrade]);
+    ga(`#/katalog/${encodeURIComponent(r.steg2.id)}`);
   };
 
   const taBort = () => {
@@ -105,7 +123,7 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
       const { receptId: _bort, ...utan } = f;
       void _bort;
       setUtkast(utan);
-    } else satt({ receptId: g.id, namn: g.namn, kategori: g.kategori || f.kategori });
+    } else satt({ receptId: g.id, namn: stegNamn(g.namn, f.steg), kategori: g.kategori || f.kategori });
   };
   const receptUrl = installningar.receptUrlMall && f.receptId ? installningar.receptUrlMall.replace("{id}", f.receptId) : "";
 
@@ -151,6 +169,7 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
           <span className="etikett">{sv.redigera.namn}</span>
           <input value={f.namn} disabled={!!kopplad} onChange={(e) => satt({ namn: e.target.value })} />
           {kopplad && <span className="liten">{sv.redigera.namnFranRecept}</span>}
+          {f.steg === 2 && <span className="liten">{sv.redigera.steg2Info}</span>}
         </label>
         <label>
           <span className="etikett">{sv.redigera.kategori}</span>
@@ -237,6 +256,31 @@ export function Redigera(props: { id: string | null; receptId?: string }) {
             ))}
           </select>
         </label>
+
+        {kanAndra && !ny && kopplad && !f.steg && !f.fortsattning && (
+          <div className="dela-upp">
+            <strong>{sv.redigera.delaUpp}</strong>
+            <p className="liten">{sv.redigera.delaUppForklaring}</p>
+            {f.faser.length > 1 && (
+              <label>
+                <span className="etikett">{sv.redigera.dag2BorjarMed}</span>
+                <select value={dag2Fran} onChange={(e) => setDag2Fran(e.target.value)}>
+                  <option value="">{sv.redigera.dag2Senare}</option>
+                  {f.faser.slice(1).map((x, i) => (
+                    <option key={x.id} value={i + 1}>
+                      {sv.redigera.moment} {i + 2}
+                      {x.namn.trim() ? `: ${x.namn.trim()}` : ""}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            <button className="sekundar" onClick={delaUppIDagar}>
+              <CalendarPlus size={18} aria-hidden />
+              {sv.redigera.delaUpp}
+            </button>
+          </div>
+        )}
 
         <label className="bock">
           <input

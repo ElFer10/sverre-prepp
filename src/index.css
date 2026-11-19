@@ -974,3 +974,20 @@ fieldset.las {
 .post-lista .post-text {
   min-width: 8.5em;
 }
+
+/* Repartir una receta en dos días (editor) */
+.dela-upp {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  margin: 4px 0 16px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--tema-ljus);
+}
+
+.dela-upp p,
+.dela-upp label {
+  margin: 0;
+  width: 100%;
+}

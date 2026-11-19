@@ -37,6 +37,7 @@ const forslag = (id: string) => kopplingsforslag(KATALOG, GRUND).find((f) => f.f
 describe("normalisera", () => {
   it("ignora mayúsculas, signos y el sufijo de steg", () => {
     expect(normalisera("Vispat brynt smör — steg 1")).toBe("vispat brynt smör");
+    expect(normalisera("Vispat brynt smör · steg 2")).toBe("vispat brynt smör");
     expect(normalisera("J-K  majonnäs")).toBe("j k majonnäs");
     expect(normalisera("Brynt smör (3 l)", true)).toBe("brynt smör");
   });
@@ -81,6 +82,12 @@ describe("estado del enlace", () => {
     expect(s.namn).toBe("Vinägersky");
     expect(s.kategori).toBe("Såser");
     expect(s.faser).toBe(vin.faser);
+  });
+
+  it("una receta repartida en dos días mantiene el número de steg en el nombre", () => {
+    const [s1, s2] = synka([{ ...vin, steg: 1 }, { ...vin, id: "vin-2", steg: 2 }], [g("g-vin", "Vinäger-sky")]);
+    expect(s1.namn).toBe("Vinäger-sky · steg 1");
+    expect(s2.namn).toBe("Vinäger-sky · steg 2");
   });
 
   it("distingue enlazada, propia y huérfana", () => {
